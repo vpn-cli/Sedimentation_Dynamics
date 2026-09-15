@@ -1,0 +1,45 @@
+=====================================================================================
+PHASE 1C — BLOB RESOLUTION CONVERGENCE STUDY (Rh_calibrated)
+=====================================================================================
+[Numba Initialization] JIT compilation warmup complete in 3.7789 s.
+Theoretical Stokes reference U_theory = F / (6*pi*eta*Rh) = 0.0530516477
+Testing resolutions N in [12, 42, 162, 642, 2562] with F = 1.0, eta = 1.0
+
+>>> Verifying Solver Path at N = 642 <<<
+N=642 Cholesky U : 0.0530495835 (time: 0.2512 s)
+N=642 GMRES U    : 0.0530495835 (time: 2.5971 s)
+Difference |U_chol - U_gmres|: 5.87e-14 (Check < 1e-7: PASS)
+Verification confirmed: GMRES solver path matches factorization exactly. Safe to proceed to N=2562.
+
+    N |         Solver |    a_blob |          U_z |          |U| |     AbsErr |  RelErr [%] |    |Omega| |  Time [s]
+---------------------------------------------------------------------------------------------------------
+   12 |       Cholesky |  0.416421 |   0.05305386 |   0.05305386 |   2.21e-06 |    0.00417% |   2.80e-18 |    0.0009
+   42 |       Cholesky |  0.243553 |   0.05305060 |   0.05305060 |   1.04e-06 |    0.00197% |   1.15e-17 |    0.0011
+  162 |       Cholesky |  0.131009 |   0.05305341 |   0.05305341 |   1.76e-06 |    0.00332% |   8.14e-18 |    0.0101
+  642 |       Cholesky |  0.067528 |   0.05304958 |   0.05304958 |   2.06e-06 |    0.00389% |   4.72e-18 |    0.1851
+ 2562 |  GMRES (Numba) |  0.034205 |   0.05305324 |   0.05305324 |   1.59e-06 |    0.00300% |   7.37e-16 |    1.0683
+
+[Saved Raw Data] -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\resolution_convergence\raw_data\resolution_convergence.csv
+
+=======================================================
+CONVERGENCE ANALYSIS & SEQUENCE BEHAVIOR
+=======================================================
+Relative Error Sequence E_N:
+  E_12   = 0.00417% (4.1714e-05)
+  E_42   = 0.00197% (1.9686e-05)
+  E_162  = 0.00332% (3.3163e-05)
+  E_642  = 0.00389% (3.8909e-05)
+  E_2562 = 0.00300% (2.9950e-05)
+
+Power-Law Model       : E_N = C * N^(-p)
+Empirical Exponent p  : -0.0030 ± 0.0802
+Coefficient C         : 3.1162e-05
+Log-Log Fit R^2       : 0.0005
+Maximum Error in Set  : 0.00417% (at N=12)
+Minimum Error in Set  : 0.00197% (at N=42)
+All Errors Sub-0.005% : YES
+[Saved Processed Data] -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\resolution_convergence\processed_data\resolution_convergence_processed.csv
+[Saved Summary JSON]   -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\resolution_convergence\reports\resolution_convergence_summary.json
+[Saved Plot 1]         -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\resolution_convergence\plots\error_vs_N_loglog.png
+[Saved Plot 2]         -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\resolution_convergence\plots\velocity_vs_N.png
+[Saved Plot 3]         -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\resolution_convergence\plots\runtime_vs_N.png

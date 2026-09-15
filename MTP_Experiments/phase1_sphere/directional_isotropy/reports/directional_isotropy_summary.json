@@ -1,0 +1,67 @@
+{
+  "test": "Directional Isotropy and Horizontal Force Validation",
+  "analytical_stokes_velocity": 0.05305164769729845,
+  "primary_resolution": 162,
+  "resolutions_tested": [
+    42,
+    162,
+    642
+  ],
+  "results_summary": [
+    {
+      "N": 42,
+      "Mx": 0.05305060333993416,
+      "My": 0.05305060333993411,
+      "Mz": 0.053050603339934124,
+      "diff_Mx_Mz": 3.469446951953614e-17,
+      "relative_isotropy_error_xz": 6.539882175745152e-16,
+      "diff_Mx_My": 4.85722573273506e-17,
+      "relative_isotropy_error_xy": 9.155835046043215e-16,
+      "max_transverse_velocity": 1.0415752516635319e-17,
+      "max_angular_velocity": 1.1456664136200694e-17,
+      "stokes_error_Mx_percent": 0.001968567254024753,
+      "stokes_error_Mz_percent": 0.001968567254090151,
+      "status": "PASS"
+    },
+    {
+      "N": 162,
+      "Mx": 0.05305340704968184,
+      "My": 0.053053407049681825,
+      "Mz": 0.05305340704968185,
+      "diff_Mx_Mz": 1.3877787807814457e-17,
+      "relative_isotropy_error_xz": 2.6158146252169263e-16,
+      "diff_Mx_My": 1.3877787807814457e-17,
+      "relative_isotropy_error_xy": 2.6158146252169277e-16,
+      "max_transverse_velocity": 2.0285295803385716e-17,
+      "max_angular_velocity": 8.143558220964626e-18,
+      "stokes_error_Mx_percent": 0.003316301113640817,
+      "stokes_error_Mz_percent": 0.003316301113666976,
+      "status": "PASS"
+    },
+    {
+      "N": 642,
+      "Mx": 0.05304958350485308,
+      "My": 0.05304958350485306,
+      "Mz": 0.05304958350485308,
+      "diff_Mx_Mz": 0.0,
+      "relative_isotropy_error_xz": 0.0,
+      "diff_Mx_My": 2.0816681711721685e-17,
+      "relative_isotropy_error_xy": 3.92400473979543e-16,
+      "max_transverse_velocity": 9.817712550439861e-18,
+      "max_angular_velocity": 1.426141418248728e-17,
+      "stokes_error_Mx_percent": 0.0038909110931785854,
+      "stokes_error_Mz_percent": 0.0038909110931785854,
+      "status": "PASS"
+    }
+  ],
+  "primary_case_details": {
+    "N": 162,
+    "U_horizontal": 0.05305340704968184,
+    "U_vertical": 0.05305340704968185,
+    "absolute_mobility_difference": 1.3877787807814457e-17,
+    "relative_isotropy_discrepancy": 2.6158146252169263e-16,
+    "transverse_velocity_under_Fx": 4.2186327539843127e-19,
+    "angular_velocity_under_Fx": 1.4064313802713012e-18,
+    "alignment_angle_deg": 0.0
+  }
+}

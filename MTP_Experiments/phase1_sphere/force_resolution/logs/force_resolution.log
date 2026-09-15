@@ -1,0 +1,108 @@
+================================================================================
+PHASE 1 — VELOCITY VS FORCE ACROSS BLOB RESOLUTIONS
+================================================================================
+
+--- PART 1: CALIBRATED SPHERES (Rh = 1.0) ---
+
+[Rh_calibrated] Auditing Existing Datasets:
+  Total required grid points : 30 (5 resolutions x 6 forces)
+  Found in existing caches   : 10
+  Missing points to compute  : 20
+  N=  12, F= 0.1 | [COMPUTED] speed=0.00530539, time=0.0161s (Cholesky)
+  N=  12, F= 0.5 | [COMPUTED] speed=0.02652693, time=0.0008s (Cholesky)
+  N=  12, F= 1.0 | [REUSED] speed=0.05305386 (Phase 1C Resolution Sweep (cached))
+  N=  12, F= 2.0 | [COMPUTED] speed=0.10610772, time=0.0004s (Cholesky)
+  N=  12, F= 5.0 | [COMPUTED] speed=0.26526930, time=0.0004s (Cholesky)
+  N=  12, F=10.0 | [COMPUTED] speed=0.53053861, time=0.0004s (Cholesky)
+  N=  42, F= 0.1 | [COMPUTED] speed=0.00530506, time=0.0013s (Cholesky)
+  N=  42, F= 0.5 | [COMPUTED] speed=0.02652530, time=0.0008s (Cholesky)
+  N=  42, F= 1.0 | [REUSED] speed=0.05305060 (Phase 1C Resolution Sweep (cached))
+  N=  42, F= 2.0 | [COMPUTED] speed=0.10610121, time=0.0007s (Cholesky)
+  N=  42, F= 5.0 | [COMPUTED] speed=0.26525302, time=0.0007s (Cholesky)
+  N=  42, F=10.0 | [COMPUTED] speed=0.53050603, time=0.0007s (Cholesky)
+  N= 162, F= 0.1 | [REUSED] speed=0.00530534 (Phase 1B Force Sweep (cached))
+  N= 162, F= 0.5 | [REUSED] speed=0.02652670 (Phase 1B Force Sweep (cached))
+  N= 162, F= 1.0 | [REUSED] speed=0.05305341 (Phase 1B Force Sweep (cached))
+  N= 162, F= 2.0 | [REUSED] speed=0.10610681 (Phase 1B Force Sweep (cached))
+  N= 162, F= 5.0 | [REUSED] speed=0.26526704 (Phase 1B Force Sweep (cached))
+  N= 162, F=10.0 | [REUSED] speed=0.53053407 (Phase 1B Force Sweep (cached))
+  N= 642, F= 0.1 | [COMPUTED] speed=0.00530496, time=0.3806s (Cholesky)
+  N= 642, F= 0.5 | [COMPUTED] speed=0.02652479, time=0.5004s (Cholesky)
+  N= 642, F= 1.0 | [REUSED] speed=0.05304958 (Phase 1C Resolution Sweep (cached))
+  N= 642, F= 2.0 | [COMPUTED] speed=0.10609917, time=0.3783s (Cholesky)
+  N= 642, F= 5.0 | [COMPUTED] speed=0.26524792, time=0.2768s (Cholesky)
+  N= 642, F=10.0 | [COMPUTED] speed=0.53049584, time=0.2895s (Cholesky)
+  N=2562, F= 0.1 | [COMPUTED] speed=0.00530532, time=4.9199s (GMRES (Numba))
+  N=2562, F= 0.5 | [COMPUTED] speed=0.02652662, time=0.9356s (GMRES (Numba))
+  N=2562, F= 1.0 | [REUSED] speed=0.05305324 (Phase 1C Resolution Sweep (cached))
+  N=2562, F= 2.0 | [COMPUTED] speed=0.10610647, time=1.0283s (GMRES (Numba))
+  N=2562, F= 5.0 | [COMPUTED] speed=0.26526618, time=0.9148s (GMRES (Numba))
+  N=2562, F=10.0 | [COMPUTED] speed=0.53053237, time=1.0914s (GMRES (Numba))
+
+[Saved Raw Data] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_resolution\raw_data\force_resolution_Rh_calibrated.csv
+
+--- PART 2: GEOMETRIC SPHERES (Rg = 1.0) ---
+
+[Rg_geometric] Auditing Existing Datasets:
+  Total required grid points : 30 (5 resolutions x 6 forces)
+  Found in existing caches   : 5
+  Missing points to compute  : 25
+  N=  12, F= 0.1 | [COMPUTED] speed=0.00420229, time=0.0023s (Cholesky)
+  N=  12, F= 0.5 | [COMPUTED] speed=0.02101143, time=0.0010s (Cholesky)
+  N=  12, F= 1.0 | [REUSED] speed=0.04202286 (Phase 1C Resolution Sweep (cached))
+  N=  12, F= 2.0 | [COMPUTED] speed=0.08404572, time=0.0008s (Cholesky)
+  N=  12, F= 5.0 | [COMPUTED] speed=0.21011430, time=0.0007s (Cholesky)
+  N=  12, F=10.0 | [COMPUTED] speed=0.42022860, time=0.0006s (Cholesky)
+  N=  42, F= 0.1 | [COMPUTED] speed=0.00472822, time=0.0016s (Cholesky)
+  N=  42, F= 0.5 | [COMPUTED] speed=0.02364109, time=0.0014s (Cholesky)
+  N=  42, F= 1.0 | [REUSED] speed=0.04728218 (Phase 1C Resolution Sweep (cached))
+  N=  42, F= 2.0 | [COMPUTED] speed=0.09456436, time=0.0013s (Cholesky)
+  N=  42, F= 5.0 | [COMPUTED] speed=0.23641089, time=0.0013s (Cholesky)
+  N=  42, F=10.0 | [COMPUTED] speed=0.47282178, time=0.0012s (Cholesky)
+  N= 162, F= 0.1 | [COMPUTED] speed=0.00503831, time=0.0106s (Cholesky)
+  N= 162, F= 0.5 | [COMPUTED] speed=0.02519155, time=0.0110s (Cholesky)
+  N= 162, F= 1.0 | [REUSED] speed=0.05038310 (Phase 1C Resolution Sweep (cached))
+  N= 162, F= 2.0 | [COMPUTED] speed=0.10076621, time=0.0108s (Cholesky)
+  N= 162, F= 5.0 | [COMPUTED] speed=0.25191551, time=0.0110s (Cholesky)
+  N= 162, F=10.0 | [COMPUTED] speed=0.50383103, time=0.0108s (Cholesky)
+  N= 642, F= 0.1 | [COMPUTED] speed=0.00518113, time=0.3310s (Cholesky)
+  N= 642, F= 0.5 | [COMPUTED] speed=0.02590565, time=0.1825s (Cholesky)
+  N= 642, F= 1.0 | [REUSED] speed=0.05181129 (Phase 1C Resolution Sweep (cached))
+  N= 642, F= 2.0 | [COMPUTED] speed=0.10362259, time=0.2600s (Cholesky)
+  N= 642, F= 5.0 | [COMPUTED] speed=0.25905647, time=0.1796s (Cholesky)
+  N= 642, F=10.0 | [COMPUTED] speed=0.51811294, time=0.2040s (Cholesky)
+  N=2562, F= 0.1 | [COMPUTED] speed=0.00524604, time=1.0713s (GMRES (Numba))
+  N=2562, F= 0.5 | [COMPUTED] speed=0.02623022, time=1.0152s (GMRES (Numba))
+  N=2562, F= 1.0 | [REUSED] speed=0.05246043 (Phase 1C Resolution Sweep (cached))
+  N=2562, F= 2.0 | [COMPUTED] speed=0.10492087, time=1.2079s (GMRES (Numba))
+  N=2562, F= 5.0 | [COMPUTED] speed=0.26230217, time=1.2094s (GMRES (Numba))
+  N=2562, F=10.0 | [COMPUTED] speed=0.52460434, time=1.0505s (GMRES (Numba))
+[Saved Raw Data] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_resolution\raw_data\force_resolution_Rg_geometric.csv
+[Saved Processed Summary] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_resolution\processed_data\force_resolution_fits_summary.csv
+
+===============================================================================================
+FORCE-LINEARITY FIT SUMMARY TABLE ACROSS RESOLUTIONS (U = m*F + b)
+===============================================================================================
+--- Calibrated Spheres (Rh = 1.0) ---
+    N | Fitted Slope m |    Intercept b |          R^2 |  Slope Error [%] |  Theoretical m
+-------------------------------------------------------------------------------------
+   12 |     0.05305386 |       0.00e+00 | 1.0000000000 |         0.00417% |     0.05305165
+   42 |     0.05305060 |       0.00e+00 | 1.0000000000 |         0.00197% |     0.05305165
+  162 |     0.05305341 |       2.78e-17 | 1.0000000000 |         0.00332% |     0.05305165
+  642 |     0.05304958 |       0.00e+00 | 1.0000000000 |         0.00389% |     0.05305165
+ 2562 |     0.05305324 |       6.33e-15 | 1.0000000000 |         0.00300% |     0.05305165
+
+--- Geometric Spheres (Rg = 1.0) ---
+    N | Fitted Slope m |    Intercept b |          R^2 |  Slope Error [%] |  Theoretical m
+-------------------------------------------------------------------------------------
+   12 |     0.04202286 |      -2.78e-17 | 1.0000000000 |         20.7888% |     0.05305165
+   42 |     0.04728218 |       2.78e-17 | 1.0000000000 |         10.8752% |     0.05305165
+  162 |     0.05038310 |      -2.78e-17 | 1.0000000000 |          5.0301% |     0.05305165
+  642 |     0.05181129 |       2.78e-17 | 1.0000000000 |          2.3380% |     0.05305165
+ 2562 |     0.05246043 |       1.29e-14 | 1.0000000000 |          1.1144% |     0.05305165
+===============================================================================================
+[Saved Summary JSON] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_resolution\reports\force_resolution_summary.json
+[Saved Plot 1] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_resolution\plots\velocity_vs_force_by_resolution.png
+[Saved Plot 2] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_resolution\plots\normalized_mobility_vs_force.png
+[Saved Plot 3] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_resolution\plots\geometric_velocity_vs_force.png
+[Saved Plot 4] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_resolution\plots\slopes_vs_resolution.png

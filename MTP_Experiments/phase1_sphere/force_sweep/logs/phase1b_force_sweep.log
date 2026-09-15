@@ -1,0 +1,42 @@
+===========================================================================
+PHASE 1B — FORCE LINEARITY VALIDATION (N=162, Rh_calibrated)
+===========================================================================
+Configuration: N=162, Rg=0.9497, Rh=1.0000, blob_radius=0.131009, eta=1.0
+Theoretical Stokes Slope m_theory = 1/(6*pi*eta*Rh) = 0.0530516477
+
+     F |          U_z |          |U| |     U_theory | RelErr [%] |     |Omega| | Angle [deg] | Runtime [s]
+-----------------------------------------------------------------------------------------------
+   0.1 |   0.00530534 |   0.00530534 |   0.00530516 |   0.00332% |    8.14e-19 |    0.00e+00 |      0.0331
+   0.5 |   0.02652670 |   0.02652670 |   0.02652582 |   0.00332% |    4.07e-18 |    0.00e+00 |      0.0119
+   1.0 |   0.05305341 |   0.05305341 |   0.05305165 |   0.00332% |    8.14e-18 |    0.00e+00 |      0.0113
+   2.0 |   0.10610681 |   0.10610681 |   0.10610330 |   0.00332% |    1.63e-17 |    0.00e+00 |      0.0118
+   5.0 |   0.26526704 |   0.26526704 |   0.26525824 |   0.00332% |    4.07e-17 |    0.00e+00 |      0.0113
+  10.0 |   0.53053407 |   0.53053407 |   0.53051648 |   0.00332% |    8.14e-17 |    0.00e+00 |      0.0113
+
+[Saved Raw Data] -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_sweep\raw_data\force_sweep.csv
+
+==================================================
+LINEAR REGRESSION AND STATISTICAL SUMMARY
+==================================================
+Linear Fit Equation       : |U| = m * F + b
+Fitted Slope m            : 0.0530534070 ± 7.08e-18
+Theoretical Slope m_th    : 0.0530516477 (1 / 6*pi = 0.0530516477)
+Fitted Intercept b        : 2.7383536904e-17 ± 3.30e-17
+Goodness of Fit R^2       : 1.000000000000
+Relative Slope Error      : 0.003316%
+Max Relative Error (Sweep): 0.003316%
+Max Transverse Drift      : 1.17e-18 (strictly negligible)
+Max Angular Velocity      : 8.14e-17 (strictly negligible)
+
+Verification Checks:
+1. Preserved Linearity (R^2 > 0.99999999)     : PASS (R^2 = 1.000000000000)
+2. Stokes Slope Agreement (< 0.1%)            : PASS (error = 0.0033%)
+3. Intercept Vanishing (|b| < 1e-12)          : PASS (b = 2.74e-17)
+4. Vanishing Rotation (|Omega| < 1e-12)       : PASS (max |Omega| = 8.14e-17)
+
+PHASE 1B OVERALL VERDICT: PASSED
+===========================================================================
+[Saved Processed Data] -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_sweep\processed_data\force_sweep_residuals.csv
+[Saved Summary JSON]   -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_sweep\reports\force_sweep_summary.json
+[Saved Plot 1]         -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_sweep\plots\force_velocity_linear.png
+[Saved Plot 2]         -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\force_sweep\plots\force_residuals.png

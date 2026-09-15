@@ -1,0 +1,40 @@
+{
+  "phase": "Phase 1B",
+  "resolution_N": 162,
+  "sphere_type": "Rh_calibrated",
+  "R_g": 0.9497,
+  "R_h": 1.0,
+  "blob_radius": 0.13100877695,
+  "viscosity": 1.0,
+  "forces_tested": [
+    0.1,
+    0.5,
+    1.0,
+    2.0,
+    5.0,
+    10.0
+  ],
+  "regression": {
+    "fitted_slope_m": 0.053053407049681894,
+    "fitted_slope_std_err": 7.075352162037836e-18,
+    "theoretical_slope_m": 0.05305164769729845,
+    "relative_slope_error_percent": 0.0033163011137454534,
+    "fitted_intercept_b": 2.7383536903562547e-17,
+    "fitted_intercept_std_err": 3.296688951642069e-17,
+    "r_squared": 1.0
+  },
+  "residuals": {
+    "max_absolute_residual": 3.3306690738754696e-16,
+    "max_relative_error_percent": 0.003316301113682672,
+    "max_transverse_drift": 1.1718392920936475e-18,
+    "max_angular_velocity": 8.143558220964625e-17
+  },
+  "verification_checks": {
+    "pass_linearity_r2": true,
+    "pass_slope_agreement": true,
+    "pass_intercept_zero": true,
+    "pass_rotation_zero": true,
+    "all_pass": true
+  },
+  "verdict": "PASSED"
+}

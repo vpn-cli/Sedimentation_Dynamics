@@ -1,0 +1,59 @@
+{
+  "phase": "Phase 1C Final Interpretation",
+  "theoretical_stokes_velocity": 0.05305164769729845,
+  "calibrated_spheres_C1": {
+    "description": "Spheres with individually calibrated Rg enforcing Rh = 1.0",
+    "error_plateau_range_percent": [
+      0.001969,
+      0.004171
+    ],
+    "conclusion": "Confirms Rh=1.0 hydrodynamic calibration precision across resolutions."
+  },
+  "geometric_spheres_C2": {
+    "description": "Spheres with exact geometric radius Rg = 1.0, testing continuum discretization convergence",
+    "regression_model": "E_N = C * N^(-p)",
+    "fit_statistics": {
+      "n": 5,
+      "df": 3,
+      "p_exponent": 0.549300984857297,
+      "p_std_err": 0.004504404918396315,
+      "ci_p_95": [
+        0.5349659580672448,
+        0.5636360116473491
+      ],
+      "C_constant": 0.8258053329416785,
+      "ln_C": -0.19139620764148324,
+      "ln_C_std_err": 0.0246238236505668,
+      "ci_C_95": [
+        0.763562571452404,
+        0.893121891265234
+      ],
+      "r_squared": 0.9997983084307421,
+      "pearson_r": -0.9998991491299221,
+      "p_value": 1.215756951667326e-06,
+      "t_crit_95": 3.1824463052837078,
+      "std_err_regression": 0.019168009604819455,
+      "residuals_log": [
+        -0.014399124648285078,
+        0.025816113639300475,
+        -0.0037146265696179626,
+        -0.013468083481447124,
+        0.005765721060048357
+      ],
+      "predicted_E": [
+        0.21090280790943133,
+        0.10598032555853176,
+        0.050488086312298286,
+        0.02369713961309731,
+        0.011080052357696896
+      ]
+    },
+    "sequence_E_N_percent": [
+      20.788775127151037,
+      10.875194801453588,
+      5.030088982321126,
+      2.338012414582494,
+      1.1144121373468898
+    ]
+  }
+}

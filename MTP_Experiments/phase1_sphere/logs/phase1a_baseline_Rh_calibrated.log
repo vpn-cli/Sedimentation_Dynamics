@@ -1,0 +1,52 @@
+======================================================================
+PHASE 1A — SINGLE SPHERE BASELINE VALIDATION (Rh_calibrated)
+======================================================================
+
+>>> Running Baseline for N = 42 Blobs <<<
+Shape                 : sphere
+N_blobs               : 42
+Blob Radius           : 0.243553
+R_g (Geometric)       : 0.8913
+R_h (Hydrodynamic)    : 1.0000
+Applied Force         : [0.0, 0.0, 1.0]
+Fluid Viscosity (eta) : 1.0000
+Orientation (q)       : [1.0, 0.0, 0.0, 0.0]
+Velocity Vector U     : [3.124574504388448e-19, 1.0411064826878193e-17, 0.053050603339934124]
+Angular Velocity Omega: [2.3129279056178864e-18, 7.326568203611905e-18, -8.498642008635512e-18]
+Simulated Speed |U|   : 5.30506033e-02
+Theoretical Speed U_th: 5.30516477e-02
+Absolute Error        : 1.0444e-06
+Relative Error [%]    : 0.001969%
+Rotation Mag |Omega|  : 1.1457e-17
+Colinearity Angle     : 0.0000e+00 deg
+Runtime               : 0.0018 s
+Check |Omega| < 1e-12 : PASS
+Check U || F          : PASS
+Check Speed Error     : PASS
+Single Test Verdict   : PASSED
+
+>>> Running Baseline for N = 162 Blobs <<<
+Shape                 : sphere
+N_blobs               : 162
+Blob Radius           : 0.131009
+R_g (Geometric)       : 0.9497
+R_h (Hydrodynamic)    : 1.0000
+Applied Force         : [0.0, 0.0, 1.0]
+Fluid Viscosity (eta) : 1.0000
+Orientation (q)       : [1.0, 0.0, 0.0, 0.0]
+Velocity Vector U     : [1.1718392920936476e-19, -1.7612282055803533e-20, 0.05305340704968185]
+Angular Velocity Omega: [1.6788878641833757e-18, -4.149576800226921e-18, 6.802932339569226e-18]
+Simulated Speed |U|   : 5.30534070e-02
+Theoretical Speed U_th: 5.30516477e-02
+Absolute Error        : 1.7594e-06
+Relative Error [%]    : 0.003316%
+Rotation Mag |Omega|  : 8.1436e-18
+Colinearity Angle     : 0.0000e+00 deg
+Runtime               : 0.0095 s
+Check |Omega| < 1e-12 : PASS
+Check U || F          : PASS
+Check Speed Error     : PASS
+Single Test Verdict   : PASSED
+
+[Raw Data Saved] -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\raw_data\phase1a_baseline_Rh_calibrated.csv
+[Summary Saved]  -> D:\Sedimentation_Dynamics\MTP_Experiments\phase1_sphere\baseline\phase1a_baseline_summary_Rh_calibrated.json
