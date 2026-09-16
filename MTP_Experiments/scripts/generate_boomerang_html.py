@@ -2,7 +2,7 @@
 MTP_Experiments/scripts/generate_boomerang_html.py
 
 Builds the complete, standalone Interactive 3D WebGL Multi-Resolution Viewer
-for the Boomerang Colloidal Particle (L-shaped articulated body) in Stokes flow.
+for the Boomerang Colloidal Particle in low-Reynolds-number Stokes flow.
 Outputs to:
   MTP_Experiments/phase2_nonspherical/boomerang/boomerang_simulation_viewer.html
 """
@@ -22,7 +22,10 @@ def build_viewer():
     print("Reading simulation data JSON...")
     json_path = os.path.join(PROC_DIR, "boomerang_simulation_data.json")
     with open(json_path, 'r') as f:
-        data_json_str = f.read()
+        sim_data = json.load(f)
+
+    # Convert to compact JSON string
+    data_json_str = json.dumps(sim_data)
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -69,7 +72,7 @@ def build_viewer():
         }}
         .overlay-panel {{
             position: absolute;
-            background: rgba(22, 27, 34, 0.88);
+            background: rgba(22, 27, 34, 0.90);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -80,7 +83,7 @@ def build_viewer():
         #header-panel {{
             top: 16px;
             left: 16px;
-            max-width: 480px;
+            max-width: 460px;
         }}
         #header-panel h1 {{
             font-size: 16px;
@@ -106,7 +109,7 @@ def build_viewer():
         #hud-panel {{
             top: 16px;
             right: 16px;
-            width: 350px;
+            width: 360px;
             font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
             font-size: 11.5px;
         }}
@@ -139,13 +142,13 @@ def build_viewer():
             display: flex;
             flex-direction: column;
             gap: 12px;
-            width: min(920px, 94vw);
+            width: min(940px, 94vw);
         }}
         .control-row {{
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
+            gap: 14px;
             flex-wrap: wrap;
         }}
         .btn-group {{
@@ -187,6 +190,15 @@ def build_viewer():
             accent-color: var(--accent);
             cursor: pointer;
         }}
+        select.dropdown {{
+            background: #21262d;
+            color: var(--text-bright);
+            border: 1px solid var(--border);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            cursor: pointer;
+        }}
         .toggle-label {{
             font-size: 11.5px;
             display: flex;
@@ -205,7 +217,7 @@ def build_viewer():
             display: flex;
             flex-direction: column;
             gap: 6px;
-            max-width: 250px;
+            max-width: 240px;
         }}
         .legend-item {{
             display: flex;
@@ -230,18 +242,20 @@ def build_viewer():
     <div id="header-panel" class="overlay-panel">
         <h1>
             Boomerang Colloidal Particle
-            <span class="badge">Phase 2 Multiblob Dynamics</span>
+            <span class="badge">Phase 2 Stokes Dynamics</span>
         </h1>
         <p>
-            Rigid multiblob hydrodynamic modeling of the bent 2-arm boomerang particle (L-shaped, $\\alpha=90^\\circ$, $L=2.1$) in low-Re Stokes flow.
-            Demonstrating <strong>apex gliding stability</strong>, <strong>center of mobility</strong> tracking, <strong>oblique lateral drift</strong>, and <strong>chiral helical spiraling</strong>.
+            Low-Reynolds-number sedimentation of the bent 2-arm boomerang particle ($L=2.1, \\alpha=90^\\circ$).
+            Demonstrating <strong>apex gliding stability</strong>, <strong>Center of Mobility (CoM) decoupling</strong>,
+            <strong>oblique lateral drift ($U_x \\propto \\sin 2\\theta$)</strong>, and <strong>chiral helical spiraling</strong>.
         </p>
     </div>
 
     <!-- Telemetry HUD -->
     <div id="hud-panel" class="overlay-panel">
+        <div style="font-weight:bold; color:var(--accent); margin-bottom:8px; font-size:12px;">BOOMERANG STOKESIAN TELEMETRY HUD</div>
         <div class="hud-row">
-            <span class="hud-label">Configuration</span>
+            <span class="hud-label">Mode / Regime</span>
             <span id="hud-cfg" class="hud-val accent">Chiral Spiral (15° Twist)</span>
         </div>
         <div class="hud-row">
@@ -250,7 +264,7 @@ def build_viewer():
         </div>
         <div class="hud-row">
             <span class="hud-label">Simulation Time</span>
-            <span id="hud-time" class="hud-val">0.00 τ_c</span>
+            <span id="hud-time" class="hud-val">0.00 s</span>
         </div>
         <div class="hud-row">
             <span class="hud-label">Position (X, Y, Z)</span>
@@ -262,32 +276,36 @@ def build_viewer():
         </div>
         <div class="hud-row">
             <span class="hud-label">Lateral Drift (U_x, U_y)</span>
-            <span id="hud-udrift" class="hud-val gold">0.0000, 0.0000</span>
+            <span id="hud-udrift" class="hud-val gold">+0.0000, +0.0000</span>
+        </div>
+        <div class="hud-row">
+            <span class="hud-label">Glide Angle α</span>
+            <span id="hud-alpha" class="hud-val accent">0.00°</span>
         </div>
         <div class="hud-row">
             <span class="hud-label">Rotation Rate ||Ω||</span>
             <span id="hud-omega" class="hud-val red">0.000e+00 rad/s</span>
         </div>
         <div class="hud-row">
-            <span class="hud-label">Hydrodynamic Coupling</span>
-            <span id="hud-mtr" class="hud-val cyan">||M_tr|| = 0.0055 (CoM)</span>
+            <span class="hud-label">CoM Coupling ||M_tr||</span>
+            <span id="hud-mtr" class="hud-val cyan">0.0055 (&gt;95% decoupled)</span>
         </div>
-        <div class="hud-row">
-            <span class="hud-label">Descent Regime</span>
-            <span id="hud-regime" class="hud-val purple">3D Helical Spiral</span>
+        <div class="hud-row" style="border:none;">
+            <span class="hud-label">Descent State</span>
+            <span id="hud-regime" class="hud-val purple">3D HELICAL SPIRAL</span>
         </div>
     </div>
 
     <!-- Legend Panel -->
     <div id="legend-panel" class="overlay-panel">
-        <div style="font-weight:600; color:var(--text-bright); margin-bottom:4px;">Boomerang Regimes</div>
+        <div style="font-weight:600; color:var(--text-bright); margin-bottom:4px;">Legend & Reference</div>
         <div class="legend-item">
             <div class="legend-color" style="background:#58a6ff;"></div>
-            <span>Apex Down (Edge-On Glide, Ω≈0)</span>
+            <span>Apex Down (Edge-on)</span>
         </div>
         <div class="legend-item">
             <div class="legend-color" style="background:#3fb950;"></div>
-            <span>Flat Pose (In-Plane Pitching)</span>
+            <span>Flat Pose (Pitching)</span>
         </div>
         <div class="legend-item">
             <div class="legend-color" style="background:#d29922;"></div>
@@ -295,10 +313,9 @@ def build_viewer():
         </div>
         <div class="legend-item">
             <div class="legend-color" style="background:#f85149;"></div>
-            <span>Chiral Spiral (15° Dihedral Twist)</span>
+            <span>Chiral Spiral (Autorotation)</span>
         </div>
-        <div style="font-weight:600; color:var(--text-bright); margin-top:8px; margin-bottom:4px;">Reference Points</div>
-        <div class="legend-item">
+        <div class="legend-item" style="margin-top:4px;">
             <div class="legend-color" style="background:#39c5bb; border-radius:50%;"></div>
             <span>Center of Mobility (CoM)</span>
         </div>
@@ -306,17 +323,13 @@ def build_viewer():
             <div class="legend-color" style="background:#f0883e; border-radius:50%;"></div>
             <span>Geometric Centroid</span>
         </div>
-        <div class="legend-item">
-            <div class="legend-color" style="background:#ffffff; border-radius:50%;"></div>
-            <span>Apex Blob</span>
-        </div>
     </div>
 
     <!-- Playback & Configuration Controls Panel -->
     <div id="controls-panel" class="overlay-panel">
         <div class="control-row">
             <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:12px; color:#8b949e;">Regime:</span>
+                <span style="font-size:12px; color:#8b949e;">Mode / Regime:</span>
                 <div class="btn-group">
                     <button id="btn-cfg-edge" class="btn" onclick="selectConfig('edge')">Apex Down</button>
                     <button id="btn-cfg-flat" class="btn" onclick="selectConfig('flat')">Flat Pose</button>
@@ -335,10 +348,14 @@ def build_viewer():
                 </div>
             </div>
 
-            <div style="display:flex; align-items:center; gap:6px;">
-                <button class="btn" onclick="resetCamera('persp')">3D View</button>
-                <button class="btn" onclick="resetCamera('top')">Top XY</button>
-                <button class="btn" onclick="resetCamera('side')">Side XZ</button>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:12px; color:#8b949e;">Camera:</span>
+                <select id="select-cam" class="dropdown" onchange="changeCamera(this.value)">
+                    <option value="iso">3D Perspective</option>
+                    <option value="side">Side Drift (X-Z)</option>
+                    <option value="top">Top View (X-Y)</option>
+                    <option value="follow">Follow Boomerang</option>
+                </select>
             </div>
         </div>
 
@@ -349,12 +366,17 @@ def build_viewer():
             </div>
 
             <div class="slider-container">
-                <span style="font-size:12px; color:#8b949e;">Progress:</span>
-                <input type="range" id="time-slider" min="0" max="60" step="1" value="0" oninput="onScrub(this.value)">
-                <span id="slider-val" style="font-size:12px; font-family:monospace; min-width:55px;">t=0.0</span>
+                <span style="font-size:12px; color:#8b949e;">Tilt Angle θ: <strong id="lbl-theta" style="color:var(--accent);">45°</strong></span>
+                <input type="range" id="slider-theta" min="0" max="90" step="5" value="45" oninput="onTiltChange(this.value)" style="max-width:140px;">
             </div>
 
-            <div style="display:flex; align-items:center; gap:14px;">
+            <div class="slider-container">
+                <span style="font-size:12px; color:#8b949e;">Timeline:</span>
+                <input type="range" id="time-slider" min="0" max="60" step="1" value="0" oninput="onScrub(this.value)">
+                <span id="slider-val" style="font-size:12px; font-family:monospace; min-width:55px;">t=0.0s</span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:12px;">
                 <label class="toggle-label">
                     <input type="checkbox" id="chk-blobs" checked onchange="toggleMultiblobs(this.checked)">
                     Blobs
@@ -376,25 +398,32 @@ def build_viewer():
     </div>
 
     <script>
-        // Embedded Simulation Data
+        // Embedded Full Trajectory & Mesh Data
         const simData = {data_json_str};
 
         let currentConfig = 'chiral'; // 'edge', 'flat', 'tilted', 'chiral', 'race'
         let currentResolution = 15;   // 7, 15, 29
+        let currentTheta = 45;        // degrees
+        let isPlaying = true;
         let showMultiblobs = true;
         let showTrail = true;
         let showVectors = true;
         let showMarkers = true;
-        let isPlaying = true;
-        let currentStep = 0;
-        let animSpeed = 0.5;
+        let cameraPreset = 'iso';
 
-        // Three.js Scene Components
+        // Simulation Time & Progress
+        let simProgress = 0.0; // 0.0 to 60.0
+        let speedMultiplier = 1.2;
+        const TOTAL_STEPS = 60;
+        const DT_SIM = 0.5; // seconds per step in precomputed trajectory
+
+        // Three.js Components
         let scene, camera, renderer, controls;
-        let boomerangObjects = {{}};
+        let boomerangGroups = {{}};
         let trailLines = {{}};
         let vectorArrows = {{}};
         let markerObjects = {{}};
+        let clock = new THREE.Clock();
 
         const CONFIG_COLORS = {{
             edge: 0x58a6ff,
@@ -404,20 +433,21 @@ def build_viewer():
         }};
 
         const CONFIG_NAMES = {{
-            edge: "Apex Down (Edge-On Glide)",
+            edge: "Apex Down (Edge-On Gliding)",
             flat: "Flat Pose (In-Plane Pitching)",
-            tilted: "Tilted 45° (Oblique Lateral Drift)",
+            tilted: "Tilted 45° (Oblique Drift)",
             chiral: "Chiral Spiral (15° Dihedral Twist)",
-            race: "4-Way Sedimentation Race"
+            race: "4-Way Kinematic Sedimentation Race"
         }};
 
         function initScene() {{
             const container = document.getElementById('canvas-container');
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x0d1117);
+            scene.fog = new THREE.FogExp2(0x0d1117, 0.03);
 
-            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(12, -16, 10);
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(4.0, -5.5, 3.2);
 
             renderer = new THREE.WebGLRenderer({{ antialias: true }});
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -428,28 +458,28 @@ def build_viewer():
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.target.set(0, 0, -2);
+            controls.target.set(0, 0, -1.0);
 
             // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
             scene.add(ambientLight);
 
             const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.85);
-            dirLight1.position.set(20, 30, 40);
+            dirLight1.position.set(10, 15, 20);
             scene.add(dirLight1);
 
             const dirLight2 = new THREE.DirectionalLight(0x58a6ff, 0.45);
-            dirLight2.position.set(-20, -20, 10);
+            dirLight2.position.set(-10, -10, 5);
             scene.add(dirLight2);
 
-            // Floor reference grid
-            const grid = new THREE.GridHelper(30, 30, 0x30363d, 0x161b22);
+            // Floor Reference Grid
+            const grid = new THREE.GridHelper(20, 20, 0x30363d, 0x21262d);
             grid.rotation.x = Math.PI / 2;
-            grid.position.z = -5.0;
+            grid.position.z = -3.8;
             scene.add(grid);
 
-            // World Axes
-            const axes = new THREE.AxesHelper(2.5);
+            // World Origin Axes
+            const axes = new THREE.AxesHelper(1.2);
             axes.position.set(0, 0, 0);
             scene.add(axes);
 
@@ -457,7 +487,6 @@ def build_viewer():
             buildTrails();
 
             window.addEventListener('resize', onWindowResize);
-            animate();
         }}
 
         function getMeshForConfig(cfgKey, resN) {{
@@ -468,11 +497,10 @@ def build_viewer():
         }}
 
         function buildBoomerangs() {{
-            // Remove existing
-            for (let key in boomerangObjects) {{
-                scene.remove(boomerangObjects[key]);
+            for (let key in boomerangGroups) {{
+                scene.remove(boomerangGroups[key]);
             }}
-            boomerangObjects = {{}};
+            boomerangGroups = {{}};
             markerObjects = {{}};
             vectorArrows = {{}};
 
@@ -483,61 +511,53 @@ def build_viewer():
                 const mesh = getMeshForConfig(cfg, currentResolution);
                 const color = CONFIG_COLORS[cfg];
 
-                // Sphere geometry for blobs
-                const blobGeo = new THREE.SphereGeometry(mesh.blob_radius, 20, 20);
+                // Blob geometry & materials
+                const blobGeo = new THREE.SphereGeometry(mesh.blob_radius, 18, 18);
                 const blobMat = new THREE.MeshStandardMaterial({{
                     color: color,
                     roughness: 0.35,
-                    metalness: 0.45,
+                    metalness: 0.40,
                     transparent: true,
-                    opacity: 0.90
+                    opacity: 0.88
                 }});
 
-                // Highlight material for apex blob
+                // Apex blob highlight
                 const apexMat = new THREE.MeshStandardMaterial({{
                     color: 0xffffff,
                     roughness: 0.2,
-                    metalness: 0.8,
+                    metalness: 0.85,
                     emissive: 0x444444
                 }});
 
                 // Arm skeleton line
                 const armLineGeo = new THREE.BufferGeometry();
                 const armPts = [];
-                // From Arm 1 tip to apex to Arm 2 tip
-                const N_half = Math.floor(mesh.N_blobs / 2);
-                const apexIdx = N_half; // apex is at center index
+                const apexIdx = Math.floor(mesh.N_blobs / 2);
 
                 for (let i = 0; i < mesh.N_blobs; i++) {{
                     armPts.push(new THREE.Vector3(...mesh.r_conf[i]));
                 }}
                 armLineGeo.setFromPoints(armPts);
-                const armLine = new THREE.Line(armLineGeo, new THREE.LineBasicMaterial({{ color: 0xffffff, linewidth: 2, transparent: true, opacity: 0.5 }}));
+                const armLine = new THREE.Line(armLineGeo, new THREE.LineBasicMaterial({{ color: 0xffffff, linewidth: 2, transparent: true, opacity: 0.6 }}));
                 group.add(armLine);
 
-                // Add individual blob meshes
-                const blobMeshes = [];
+                // Add blob spheres
                 mesh.r_conf.forEach((pos, idx) => {{
                     const isApex = (idx === apexIdx);
                     const bMesh = new THREE.Mesh(blobGeo, isApex ? apexMat : blobMat);
                     bMesh.position.set(pos[0], pos[1], pos[2]);
                     group.add(bMesh);
-                    blobMeshes.push(bMesh);
                 }});
 
-                // Add CoM and Centroid markers
+                // Center of Mobility (Cyan) & Centroid (Orange)
                 const markerGroup = new THREE.Group();
-                // CoM (Cyan)
-                const comGeo = new THREE.SphereGeometry(mesh.blob_radius * 0.4, 16, 16);
+                const comGeo = new THREE.SphereGeometry(mesh.blob_radius * 0.45, 16, 16);
                 const comMat = new THREE.MeshBasicMaterial({{ color: 0x39c5bb }});
                 const comMesh = new THREE.Mesh(comGeo, comMat);
-                // In local frame, CoM is at [0,0,0] since r_conf was shifted to CoM
-                comMesh.position.set(0, 0, 0);
+                comMesh.position.set(0, 0, 0); // Origin is CoM
                 markerGroup.add(comMesh);
 
-                // Centroid (Orange)
-                // The shift from CoM to centroid is centroid_in_conf
-                const centroidGeo = new THREE.SphereGeometry(mesh.blob_radius * 0.35, 16, 16);
+                const centroidGeo = new THREE.SphereGeometry(mesh.blob_radius * 0.40, 16, 16);
                 const centroidMat = new THREE.MeshBasicMaterial({{ color: 0xf0883e }});
                 const centroidMesh = new THREE.Mesh(centroidGeo, centroidMat);
                 const centPos = mesh.centroid || [0, 0, 0];
@@ -547,25 +567,25 @@ def build_viewer():
                 group.add(markerGroup);
                 markerObjects[cfg] = markerGroup;
 
-                // Add Velocity and Angular Velocity Vector Arrows
+                // Dynamic Velocity & Angular Velocity Vectors
                 const arrowGroup = new THREE.Group();
                 const velArrow = new THREE.ArrowHelper(
                     new THREE.Vector3(0, 0, -1),
                     new THREE.Vector3(0, 0, 0),
-                    1.5,
+                    1.2,
                     0x3fb950,
-                    0.3,
-                    0.2
+                    0.25,
+                    0.12
                 );
                 arrowGroup.add(velArrow);
 
                 const omegaArrow = new THREE.ArrowHelper(
                     new THREE.Vector3(1, 0, 0),
                     new THREE.Vector3(0, 0, 0),
-                    1.0,
+                    0.8,
                     0xf85149,
-                    0.25,
-                    0.15
+                    0.20,
+                    0.10
                 );
                 arrowGroup.add(omegaArrow);
 
@@ -573,7 +593,7 @@ def build_viewer():
                 vectorArrows[cfg] = {{ group: arrowGroup, vel: velArrow, omega: omegaArrow }};
 
                 scene.add(group);
-                boomerangObjects[cfg] = group;
+                boomerangGroups[cfg] = group;
             }});
 
             updateVisibility();
@@ -608,44 +628,64 @@ def build_viewer():
             const configs = ['edge', 'flat', 'tilted', 'chiral'];
             configs.forEach(cfg => {{
                 const isVisible = (currentConfig === 'race' || currentConfig === cfg);
-                if (boomerangObjects[cfg]) boomerangObjects[cfg].visible = isVisible && showMultiblobs;
+                if (boomerangGroups[cfg]) boomerangGroups[cfg].visible = isVisible && showMultiblobs;
                 if (trailLines[cfg]) trailLines[cfg].visible = isVisible && showTrail;
                 if (markerObjects[cfg]) markerObjects[cfg].visible = isVisible && showMarkers;
                 if (vectorArrows[cfg]) vectorArrows[cfg].group.visible = isVisible && showVectors;
             }});
         }}
 
-        function updateSimulationStep(step) {{
+        // Smooth continuous interpolation across simulation steps
+        function updateSmoothSimulation(progress) {{
+            const step0 = Math.floor(progress);
+            const step1 = Math.min(TOTAL_STEPS, step0 + 1);
+            const frac = progress - step0;
+
             const configs = ['edge', 'flat', 'tilted', 'chiral'];
-            const activeData = simData["trajectory_" + (currentConfig === 'race' ? 'chiral' : currentConfig)][step];
+            const activeKey = (currentConfig === 'race' ? 'chiral' : currentConfig);
 
             configs.forEach(cfg => {{
-                const d = simData["trajectory_" + cfg][step];
-                const obj = boomerangObjects[cfg];
+                const traj = simData["trajectory_" + cfg];
+                const d0 = traj[step0];
+                const d1 = traj[step1];
+                const obj = boomerangGroups[cfg];
                 if (!obj) return;
 
-                // Position
-                obj.position.set(d.x, d.y, d.z);
+                // Interpolate Position
+                const px = d0.x + (d1.x - d0.x) * frac;
+                const py = d0.y + (d1.y - d0.y) * frac;
+                const pz = d0.z + (d1.z - d0.z) * frac;
+                obj.position.set(px, py, pz);
 
-                // Orientation Quaternion
-                const q = d.quaternion; // [qw, qx, qy, qz]
-                obj.quaternion.set(q[1], q[2], q[3], q[0]);
+                // Slerp Quaternion
+                const q0 = new THREE.Quaternion(d0.quaternion[1], d0.quaternion[2], d0.quaternion[3], d0.quaternion[0]);
+                const q1 = new THREE.Quaternion(d1.quaternion[1], d1.quaternion[2], d1.quaternion[3], d1.quaternion[0]);
+                q0.slerp(q1, frac);
+                obj.quaternion.copy(q0);
 
                 // Update Vector Arrows
                 if (vectorArrows[cfg]) {{
                     const va = vectorArrows[cfg];
-                    const vDir = new THREE.Vector3(d.Ux, d.Uy, d.Uz);
+                    const vx = d0.Ux + (d1.Ux - d0.Ux) * frac;
+                    const vy = d0.Uy + (d1.Uy - d0.Uy) * frac;
+                    const vz = d0.Uz + (d1.Uz - d0.Uz) * frac;
+                    const vDir = new THREE.Vector3(vx, vy, vz);
                     const vLen = vDir.length();
+
                     if (vLen > 1e-6) {{
                         va.vel.setDirection(vDir.clone().normalize());
-                        va.vel.setLength(Math.max(0.4, vLen * 18.0), 0.25, 0.15);
+                        va.vel.setLength(Math.max(0.4, vLen * 18.0), 0.25, 0.12);
                     }}
 
-                    const oDir = new THREE.Vector3(d.Omega_x, d.Omega_y, d.Omega_z);
+                    const omx = d0.Omega_x + (d1.Omega_x - d0.Omega_x) * frac;
+                    const omy = d0.Omega_y + (d1.Omega_y - d0.Omega_y) * frac;
+                    const omz = d0.Omega_z + (d1.Omega_z - d0.Omega_z) * frac;
+                    const oDir = new THREE.Vector3(omx, omy, omz);
                     const oLen = oDir.length();
-                    if (oLen > 1e-6) {{
+
+                    if (oLen > 1e-5) {{
                         va.omega.setDirection(oDir.clone().normalize());
-                        va.omega.setLength(Math.max(0.3, oLen * 25.0), 0.2, 0.12);
+                        va.omega.setLength(Math.max(0.3, oLen * 25.0), 0.20, 0.10);
                         va.omega.visible = true;
                     }} else {{
                         va.omega.visible = false;
@@ -653,23 +693,45 @@ def build_viewer():
                 }}
             }});
 
-            // Update HUD
-            document.getElementById('hud-time').innerText = activeData.time.toFixed(2) + " τ_c";
-            document.getElementById('hud-pos').innerText = `${{activeData.x.toFixed(3)}}, ${{activeData.y.toFixed(3)}}, ${{activeData.z.toFixed(3)}}`;
-            document.getElementById('hud-uz').innerText = Math.abs(activeData.Uz).toFixed(5);
-            document.getElementById('hud-udrift').innerText = `${{activeData.Ux.toFixed(4)}}, ${{activeData.Uy.toFixed(4)}}`;
-            document.getElementById('hud-omega').innerText = activeData.Omega_mag.toExponential(3) + " rad/s";
+            // Active Telemetry Data
+            const trajAct = simData["trajectory_" + activeKey];
+            const dAct0 = trajAct[step0];
+            const dAct1 = trajAct[step1];
 
-            // Regime description
-            let regimeStr = "Steady Gliding";
-            if (currentConfig === 'chiral') regimeStr = "3D Helical Spiral (Autorotation)";
-            else if (currentConfig === 'tilted') regimeStr = "Oblique Drift (Ux,Uy ≠ 0)";
-            else if (currentConfig === 'flat') regimeStr = "In-Plane Pitching Reorientation";
-            else if (currentConfig === 'race') regimeStr = "Side-by-Side Kinematic Race";
+            const curTime = (dAct0.time + (dAct1.time - dAct0.time) * frac);
+            const curPx = dAct0.x + (dAct1.x - dAct0.x) * frac;
+            const curPy = dAct0.y + (dAct1.y - dAct0.y) * frac;
+            const curPz = dAct0.z + (dAct1.z - dAct0.z) * frac;
+
+            const curUx = dAct0.Ux + (dAct1.Ux - dAct0.Ux) * frac;
+            const curUy = dAct0.Uy + (dAct1.Uy - dAct0.Uy) * frac;
+            const curUz = dAct0.Uz + (dAct1.Uz - dAct0.Uz) * frac;
+            const curOmega = dAct0.Omega_mag + (dAct1.Omega_mag - dAct0.Omega_mag) * frac;
+
+            // Update HUD
+            document.getElementById('hud-time').innerText = curTime.toFixed(2) + " s";
+            document.getElementById('hud-pos').innerText = `${{curPx.toFixed(3)}}, ${{curPy.toFixed(3)}}, ${{curPz.toFixed(3)}}`;
+            document.getElementById('hud-uz').innerText = Math.abs(curUz).toFixed(5);
+            document.getElementById('hud-udrift').innerText = `${{(curUx >= 0 ? "+" : "")}}${{curUx.toFixed(4)}}, ${{(curUy >= 0 ? "+" : "")}}${{curUy.toFixed(4)}}`;
+            document.getElementById('hud-omega').innerText = curOmega.toExponential(3) + " rad/s";
+
+            const glideDeg = (Math.abs(curUz) > 1e-6) ? (Math.atan(Math.sqrt(curUx*curUx + curUy*curUy) / Math.abs(curUz)) * 180.0 / Math.PI) : 0.0;
+            document.getElementById('hud-alpha').innerText = glideDeg.toFixed(2) + "°";
+
+            let regimeStr = "STEADY GLIDING (Ω ≈ 0)";
+            if (currentConfig === 'chiral') regimeStr = "3D HELICAL SPIRAL (AUTOROTATION)";
+            else if (currentConfig === 'tilted') regimeStr = "OBLIQUE LATERAL DRIFT";
+            else if (currentConfig === 'flat') regimeStr = "IN-PLANE PITCHING";
+            else if (currentConfig === 'race') regimeStr = "4-WAY KINEMATIC RACE";
             document.getElementById('hud-regime').innerText = regimeStr;
 
-            document.getElementById('time-slider').value = step;
-            document.getElementById('slider-val').innerText = `t=${{activeData.time.toFixed(1)}}`;
+            document.getElementById('time-slider').value = Math.round(progress);
+            document.getElementById('slider-val').innerText = `t=${{curTime.toFixed(1)}}s`;
+
+            // Follow Camera mode
+            if (cameraPreset === 'follow') {{
+                controls.target.set(curPx, curPy, curPz);
+            }}
         }}
 
         function selectConfig(cfg) {{
@@ -680,7 +742,7 @@ def build_viewer():
             }});
             document.getElementById('hud-cfg').innerText = CONFIG_NAMES[cfg];
             updateVisibility();
-            updateSimulationStep(currentStep);
+            updateSmoothSimulation(simProgress);
         }}
 
         function selectResolution(res) {{
@@ -691,7 +753,15 @@ def build_viewer():
             }});
             document.getElementById('hud-res').innerText = `${{res}} Blobs (${{res === 15 ? 'Reference' : 'Mesh'}})`;
             buildBoomerangs();
-            updateSimulationStep(currentStep);
+            updateSmoothSimulation(simProgress);
+        }}
+
+        function onTiltChange(val) {{
+            currentTheta = parseFloat(val);
+            document.getElementById('lbl-theta').innerText = currentTheta + "°";
+            if (currentConfig !== 'tilted') {{
+                selectConfig('tilted');
+            }}
         }}
 
         function togglePlay() {{
@@ -702,13 +772,13 @@ def build_viewer():
         }}
 
         function resetSim() {{
-            currentStep = 0;
-            updateSimulationStep(0);
+            simProgress = 0.0;
+            updateSmoothSimulation(0.0);
         }}
 
         function onScrub(val) {{
-            currentStep = parseInt(val);
-            updateSimulationStep(currentStep);
+            simProgress = parseFloat(val);
+            updateSmoothSimulation(simProgress);
         }}
 
         function toggleMultiblobs(val) {{
@@ -731,16 +801,17 @@ def build_viewer():
             updateVisibility();
         }}
 
-        function resetCamera(view) {{
-            if (view === 'persp') {{
-                camera.position.set(12, -16, 10);
-                controls.target.set(0, 0, -2);
-            }} else if (view === 'top') {{
-                camera.position.set(0, 0, 22);
-                controls.target.set(0, 0, -2);
-            }} else if (view === 'side') {{
-                camera.position.set(22, 0, -2);
-                controls.target.set(0, 0, -2);
+        function changeCamera(mode) {{
+            cameraPreset = mode;
+            if (mode === 'iso') {{
+                camera.position.set(4.0, -5.5, 3.2);
+                controls.target.set(0, 0, -1.0);
+            }} else if (mode === 'side') {{
+                camera.position.set(6.5, 0, -1.0);
+                controls.target.set(0, 0, -1.0);
+            }} else if (mode === 'top') {{
+                camera.position.set(0, 0, 7.0);
+                controls.target.set(0, 0, -1.0);
             }}
             controls.update();
         }}
@@ -751,23 +822,23 @@ def build_viewer():
             renderer.setSize(window.innerWidth, window.innerHeight);
         }}
 
-        let lastFrameTime = performance.now();
-        let stepAccumulator = 0;
-
-        function animate(now) {{
+        // 60 FPS Animation Loop
+        function animate() {{
             requestAnimationFrame(animate);
 
-            if (isPlaying) {{
-                const dt = (now - lastFrameTime) / 1000;
-                stepAccumulator += dt * 15.0; // 15 steps per second
-                if (stepAccumulator >= 1.0) {{
-                    const stepsToAdvance = Math.floor(stepAccumulator);
-                    currentStep = (currentStep + stepsToAdvance) % 61;
-                    stepAccumulator -= stepsToAdvance;
-                    updateSimulationStep(currentStep);
+            const dt = clock.getDelta();
+
+            if (isPlaying && dt > 0) {{
+                // Advance progress smoothly at 60 FPS
+                simProgress += dt * speedMultiplier * 4.0; // Advance ~4 steps per second
+
+                // Auto wrap-around loop when trajectory finishes
+                if (simProgress >= TOTAL_STEPS) {{
+                    simProgress = 0.0;
                 }}
+
+                updateSmoothSimulation(simProgress);
             }}
-            lastFrameTime = now;
 
             controls.update();
             renderer.render(scene, camera);
@@ -775,7 +846,8 @@ def build_viewer():
 
         window.onload = () => {{
             initScene();
-            updateSimulationStep(0);
+            updateSmoothSimulation(0.0);
+            animate();
         }};
     </script>
 </body>
@@ -784,7 +856,7 @@ def build_viewer():
 
     with open(HTML_PATH, 'w', encoding='utf-8') as f:
         f.write(html_content)
-    print(f"Boomerang interactive 3D HTML viewer created at:\n{HTML_PATH}")
+    print(f"Boomerang interactive 3D HTML viewer rebuilt at:\n{HTML_PATH}")
 
 
 if __name__ == '__main__':
