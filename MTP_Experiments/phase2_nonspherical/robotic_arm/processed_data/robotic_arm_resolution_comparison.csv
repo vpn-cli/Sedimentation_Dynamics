@@ -1,0 +1,4 @@
+link_res,desc,N_total,blob_radius,mu_xx,mu_yy,mu_zz,anisotropy_ratio,runtime_s
+1,Single Blob per Link,7,1.000000e+00,2.04837305e-02,1.50829584e-02,1.50829584e-02,1.358071,0.0000
+12,12-Blob Shell per Link (Recommended),84,4.164207e-01,2.00985063e-02,1.49217104e-02,1.49196290e-02,1.347024,0.0047
+42,42-Blob Shell per Link (High-Res),294,2.435531e-01,2.00523043e-02,1.49185688e-02,1.49186567e-02,1.344113,0.0411

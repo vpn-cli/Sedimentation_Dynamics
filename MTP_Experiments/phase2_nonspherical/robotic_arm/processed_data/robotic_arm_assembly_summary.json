@@ -1,0 +1,11 @@
+{
+  "N_links": 7,
+  "link_resolution": 12,
+  "N_blobs": 84,
+  "blob_radius": 0.41642068286675,
+  "K_rows": 252,
+  "K_cols": 6,
+  "rank_K": 6,
+  "cond_K": 7.795606735525374,
+  "arm_length": 16.416914361980435
+}
