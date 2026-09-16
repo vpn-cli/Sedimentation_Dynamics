@@ -1,0 +1,4 @@
+center,label,norm_M_tr,offset_x,offset_y,Uz,Omega_vert_mag,Omega_inplane_mag
+apex,Apex (Corner),1.11027882e-01,0.0000,0.0000,-1.53728981e-01,1.06059521e-01,1.38777878e-17
+centroid,Geometric Centroid,1.58197042e-02,0.5600,0.5600,-5.91423262e-02,1.33741667e-02,6.07153217e-18
+com,Center of Mobility (CoM),5.51934277e-03,0.6644,0.6644,-5.77441149e-02,3.90276470e-03,4.23051007e-18

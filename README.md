@@ -37,36 +37,66 @@ $$\mathbf{r}_{\text{physical}} = \mathbf{r}^* \cdot L_c, \qquad \mathbf{U}_{\tex
 Sedimentation_Dynamics/
 ├── MTP_Experiments/
 │   ├── phase1_sphere/             # Sphere benchmarks, force sweeps, and baseline calibration
-│   ├── phase2_nonspherical/       # Ellipsoid & non-spherical body hydrodynamics
-│   │   ├── ellipsoid/
-│   │   │   ├── ellipsoid_simulation_viewer.html  # Interactive 3D WebGL Multi-Resolution Viewer
-│   │   │   ├── plots/                           # 300 DPI publication-ready figures
-│   │   │   ├── processed_data/                  # Discretized meshes & trajectory JSON data
-│   │   │   └── reports/                         # Markdown validation reports
+│   ├── phase2_nonspherical/       # Non-spherical body hydrodynamics
+│   │   ├── ellipsoid/             # Prolate ellipsoid benchmarks & 3D viewer
+│   │   ├── robotic_arm/           # 7-segment articulated robotic arm & 3D viewer
+│   │   └── boomerang/             # Bent 2-arm boomerang particle & 3D viewer
+│   │       ├── boomerang_simulation_viewer.html  # Interactive 3D WebGL Multi-Resolution Viewer
+│   │       ├── plots/                           # 300 DPI publication-ready figures & animated simulation GIF
+│   │       ├── processed_data/                  # Discretized meshes & trajectory JSON data
+│   │       └── reports/                         # Markdown validation reports
 │   └── scripts/                   # Simulation, validation, and analysis scripts
 └── RigidMultiblobsWall/           # Reference multiblob Stokesian hydrodynamics library
 ```
 
 ---
 
-## 🚀 Running Simulations & Interactive 3D Viewer
+## 🪃 Boomerang Colloidal Particle (Phase 2 Focus)
 
-### 1. Run Dynamic Sedimentation Trajectories
+The bent two-arm **boomerang particle** (`RigidMultiblobsWall/multi_bodies/Structures/boomerang_N_15.vertex`) investigates low-Reynolds-number sedimentation of non-axisymmetric, articulated particles with tunable opening angle $\alpha$ and chirality.
+
+### Key Hydrodynamic Insights
+1. **Center of Mobility (CoM) vs Centroid Audit**:
+   - Discretized at $N=15$ blobs ($L=2.1, a_{\text{blob}}=0.25$).
+   - Apex at $(0, 0, 0)$, geometric centroid at $(0.560, 0.560, 0.0)$, and hydrodynamic CoM at $(0.664, 0.664, 0.0)$ ($\Delta \mathbf{r} = +0.104$).
+   - Tracking dynamics about the apex introduces spurious lever-arm torques ($\|M_{tr}\| = 0.1110$). Shifting to the CoM minimizes translation-rotation coupling to $\|M_{tr}\| = 0.0055$ ($>95\%$ reduction).
+2. **Symmetry & Rigorous Validation**:
+   - Onsager reciprocal symmetry error: $\|M_{tr} - M_{rt}^T\|_\infty = 8.67 \times 10^{-18}$ (machine precision).
+   - Positive-definiteness: $\lambda_{\min} = 0.02918 > 0$.
+   - Force linearity: Exact proportionality across all axes ($R^2 = 1.00000000$).
+3. **Four Dynamic Sedimentation Regimes**:
+   - **Apex Down (Edge-On Gliding)**: Stable orientation ($\mathbf{\Omega} \approx 0$). Slices vertically through fluid with minimal drag.
+   - **Flat Pose (Horizontal)**: High drag settling ($|U_z| = 0.05914$), exhibiting pitching reorientation about the bisecting axis.
+   - **Tilted 45° (Oblique Drift)**: Anisotropic lateral velocity ($U_x, U_y \neq 0$) coupled with gradual alignment.
+   - **Chiral Spiral (15° Dihedral Twist)**: Breaks planar reflection symmetry ($C_s \to C_1$), coupling vertical sedimentation force $F_z$ directly to vertical hydrodynamic torque $T_z$, producing continuous autorotation and a 3D helical spiral trajectory.
+
+---
+
+## 🚀 Running Simulations & Interactive 3D Viewers
+
+### 1. Boomerang Particle
 ```bash
-python MTP_Experiments/scripts/phase2_ellipsoid_trajectory_sim.py
-```
+# Run validation suite (Onsager, CoM, linearity, angle sweep)
+python MTP_Experiments/scripts/phase2_boomerang_validation.py
 
-### 2. Run Force Sweep & Resolution Convergence
+# Run 6-DOF dynamic trajectory simulation
+python MTP_Experiments/scripts/phase2_boomerang_trajectory_sim.py
+
+# Render 300 DPI animated simulation GIF
+python MTP_Experiments/scripts/phase2_boomerang_animated_sim.py
+
+# Build interactive 3D WebGL Multi-Resolution Viewer
+python MTP_Experiments/scripts/generate_boomerang_html.py
+```
+**Launch Boomerang 3D Viewer:**
 ```bash
-python MTP_Experiments/scripts/phase2_ellipsoid_force_resolution.py
+python -m http.server 8086 --directory MTP_Experiments/phase2_nonspherical/boomerang
 ```
+Open `http://localhost:8086/boomerang_simulation_viewer.html` to inspect real-time 3D settling, toggle resolutions ($N=7, 15, 29$), switch between the 4 sedimentation regimes, inspect velocity vectors, and view real-time telemetry HUD.
 
-### 3. Launch Interactive 3D Multi-Resolution Viewer
-Start an HTTP server in the ellipsoid experiment directory:
+### 2. Ellipsoid Benchmark
 ```bash
 python -m http.server 8085 --directory MTP_Experiments/phase2_nonspherical/ellipsoid
 ```
-Open your browser at `http://localhost:8085/ellipsoid_simulation_viewer.html` to:
-- Dynamically toggle blob resolutions ($N = 12, 42, 162, 642$).
-- Inspect real-time 3D settling trajectories, velocity vectors, and telemetry HUD.
-- Compare descent dynamics across orientations ($\theta = 0^\circ$ broadside, $\theta = 45^\circ$ gliding, $\theta = 90^\circ$ streamlined).
+Open `http://localhost:8085/ellipsoid_simulation_viewer.html` for prolate ellipsoid multi-resolution dynamics ($N=12, 42, 162, 642$).
+

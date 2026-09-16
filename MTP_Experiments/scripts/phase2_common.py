@@ -210,12 +210,105 @@ def generate_ellipsoid_mesh(N, a, b, c=None, sphere_type='Rh_calibrated', custom
 
 
 # =============================================================================
-# 3. GEOMETRY GENERATION: ROBOTIC ARM / COMPLEX RIGID BODY
+# 3. GEOMETRY GENERATION: BOOMERANG & ROBOTIC ARM RIGID BODIES
 # =============================================================================
+
+def generate_boomerang_mesh(N_blobs=15, arm_length=2.1, angle_deg=90.0,
+                            blob_radius=None, dihedral_deg=0.0, center_at='centroid'):
+    """
+    Generates the rigid multiblob mesh for a boomerang colloidal particle.
+    Directly interfaces with the repository's reference 'boomerang_N_15.vertex'
+    when N_blobs=15 and angle_deg=90, while generalizing to arbitrary resolutions
+    (e.g. N=7, 15, 29), opening angles, and 3D chiral dihedral twists.
+
+    Parameters:
+      - N_blobs: Total number of blobs (e.g. 7, 15, 29; must be odd: 2*N_arm + 1)
+      - arm_length: Length of each arm measured from the apex (default 2.1)
+      - angle_deg: Opening angle between the two arms in degrees (default 90.0)
+      - blob_radius: Hydrodynamic radius of individual blobs (default 0.25 for N=15)
+      - dihedral_deg: Out-of-plane dihedral twist for chiral boomerangs (default 0.0)
+      - center_at: 'apex' (apex at origin), 'centroid' (geometric centroid at origin),
+                   or 'com' (hydrodynamic center of mobility at origin)
+
+    Returns:
+      - r_conf: (N_blobs, 3) coordinates in the rigid body frame
+      - a_blob: Hydrodynamic radius of individual blobs
+      - meta: Metadata dictionary
+    """
+    vfile = os.path.join(STRUCTURES_DIR, 'boomerang_N_15.vertex')
+
+    if N_blobs == 15 and abs(angle_deg - 90.0) < 1e-6 and abs(dihedral_deg) < 1e-6 and abs(arm_length - 2.1) < 1e-6:
+        # Load canonical upstream reference mesh directly
+        r_raw = read_vertex_file(vfile)
+        a_blob = 0.25 if blob_radius is None else float(blob_radius)
+    else:
+        # Parametric generation for resolution and angle sweeps
+        N_arm = (N_blobs - 1) // 2
+        d_spacing = arm_length / N_arm
+        if blob_radius is None:
+            # Scale blob radius inversely with resolution to preserve effective thickness
+            a_blob = 0.25 * (7.0 / N_arm) * (arm_length / 2.1)
+        else:
+            a_blob = float(blob_radius)
+
+        alpha_rad = np.radians(angle_deg)
+        phi_rad = np.radians(dihedral_deg)
+
+        # Arm 1 direction along +x
+        e1 = np.array([1.0, 0.0, 0.0])
+        # Arm 2 direction with opening angle alpha in xy and dihedral twist phi out-of-plane
+        e2 = np.array([
+            np.cos(alpha_rad),
+            np.sin(alpha_rad) * np.cos(phi_rad),
+            np.sin(alpha_rad) * np.sin(phi_rad)
+        ])
+
+        # Assemble: Arm 1 (descending to apex), Apex, Arm 2 (ascending from apex)
+        pts = []
+        for i in range(N_arm, 0, -1):
+            pts.append(i * d_spacing * e1)
+        pts.append(np.array([0.0, 0.0, 0.0]))
+        for i in range(1, N_arm + 1):
+            pts.append(i * d_spacing * e2)
+
+        r_raw = np.array(pts)
+
+    # Center coordinates according to center_at
+    centroid = np.mean(r_raw, axis=0)
+    if center_at == 'apex':
+        r_conf = r_raw.copy()
+        tracking_offset = np.zeros(3)
+    elif center_at == 'centroid':
+        r_conf = r_raw - centroid
+        tracking_offset = centroid
+    elif center_at == 'com':
+        r_temp = r_raw - centroid
+        com_info = compute_center_of_mobility(r_temp, a_blob, eta=1.0)
+        com_shift = com_info['r_shift_to_com']
+        r_conf = r_temp - com_shift
+        tracking_offset = centroid + com_shift
+    else:
+        raise ValueError(f"Unknown center_at: {center_at}. Use 'apex', 'centroid', or 'com'.")
+
+    meta = {
+        'N_blobs': len(r_conf),
+        'arm_length': arm_length,
+        'opening_angle_deg': angle_deg,
+        'dihedral_deg': dihedral_deg,
+        'blob_radius': a_blob,
+        'center_at': center_at,
+        'centroid': centroid.tolist(),
+        'tracking_offset': tracking_offset.tolist(),
+        'apex_coord': (-tracking_offset if center_at != 'apex' else np.zeros(3)).tolist(),
+        'source_vertex_file': vfile if (N_blobs == 15 and angle_deg == 90.0) else 'parametric'
+    }
+
+    return r_conf, a_blob, meta
+
 
 def assemble_robotic_arm_rigid(N_links=7, link_resolution=12, link_spacing=2.5,
                                 link_radius=1.0, config='straight', bend_angle_deg=0.0,
-                                center_at='centroid'):
+                                twist_angle_deg=0.0, center_at='centroid'):
     """
     Assembles a multi-segment robotic arm into a SINGLE RIGID BODY.
     Uses spherical multiblob shells for each segment as specified in the repository's
@@ -226,8 +319,9 @@ def assemble_robotic_arm_rigid(N_links=7, link_resolution=12, link_spacing=2.5,
       - link_resolution: 1 (single blob) or 12 (shell_N_12) or 42 (shell_N_42)
       - link_spacing: Center-to-center distance between adjacent links (default 2.5)
       - link_radius: Geometric radius of each spherical link (default 1.0)
-      - config: 'straight' or 'bent' (elbow bend at middle link)
-      - bend_angle_deg: Bend angle in degrees for 'bent' config (e.g. 45 or 90)
+      - config: 'straight', 'bent' (planar bend at elbow), or 'chiral' (planar bend + out-of-plane wrist twist)
+      - bend_angle_deg: In-plane elbow bend angle in degrees (e.g. 45 or 90)
+      - twist_angle_deg: Out-of-plane wrist twist angle in degrees for chiral configuration (e.g. 45)
       - center_at: 'centroid' (centers body frame at geometric centroid) or 'root' (first link at 0)
 
     Returns:
@@ -252,6 +346,7 @@ def assemble_robotic_arm_rigid(N_links=7, link_resolution=12, link_spacing=2.5,
     # Determine link center locations
     link_centers = np.zeros((N_links, 3))
     mid_index = N_links // 2
+    wrist_index = max(mid_index + 1, N_links - 2)
 
     cur_pos = np.zeros(3)
     cur_dir = np.array([1.0, 0.0, 0.0])
@@ -260,15 +355,27 @@ def assemble_robotic_arm_rigid(N_links=7, link_resolution=12, link_spacing=2.5,
         if i == 0:
             link_centers[i] = cur_pos
         else:
-            if config == 'bent' and i == mid_index:
+            # Planar elbow bend at mid_index
+            if (config in ['bent', 'chiral']) and i == mid_index and bend_angle_deg != 0.0:
                 theta = np.radians(bend_angle_deg)
-                # Rotate direction vector about z-axis
                 rot_z = np.array([
                     [np.cos(theta), -np.sin(theta), 0.0],
                     [np.sin(theta),  np.cos(theta), 0.0],
                     [0.0,            0.0,           1.0]
                 ])
                 cur_dir = np.dot(rot_z, cur_dir)
+
+            # Out-of-plane wrist twist at wrist_index for chiral configuration
+            if (config == 'chiral' or twist_angle_deg != 0.0) and i == wrist_index and twist_angle_deg != 0.0:
+                phi = np.radians(twist_angle_deg)
+                # Rotate about the current direction vector or y-axis to create 3D non-planar chirality
+                rot_x = np.array([
+                    [1.0, 0.0,           0.0],
+                    [0.0, np.cos(phi), -np.sin(phi)],
+                    [0.0, np.sin(phi),  np.cos(phi)]
+                ])
+                cur_dir = np.dot(rot_x, cur_dir)
+
             cur_pos = cur_pos + link_spacing * cur_dir
             link_centers[i] = cur_pos
 
@@ -298,8 +405,10 @@ def assemble_robotic_arm_rigid(N_links=7, link_resolution=12, link_spacing=2.5,
         'blob_radius': a_blob,
         'config': config,
         'bend_angle_deg': bend_angle_deg,
+        'twist_angle_deg': twist_angle_deg,
         'center_at': center_at,
-        'centroid': centroid
+        'centroid': centroid,
+        'link_centers': link_centers.tolist()
     }
 
     return r_conf, a_blob, meta

@@ -1,0 +1,17 @@
+{
+  "N_blobs": 15,
+  "blob_radius": 0.25,
+  "arm_length": 2.1,
+  "opening_angle_deg": 90.0,
+  "K_rows": 45,
+  "K_cols": 6,
+  "rank_K": 6,
+  "cond_K": 2.2242680641174157,
+  "span_x": 2.1,
+  "span_y": 2.1,
+  "centroid": [
+    0.5600000000000002,
+    0.56,
+    0.0
+  ]
+}

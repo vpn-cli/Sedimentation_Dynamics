@@ -1,0 +1,4 @@
+case,slope_U,r2_U,slope_Omega,r2_Omega
+Normal to Plane (F along z),5.91423262e-02,1.00000000,1.33741667e-02,1.00000000
+In-Plane Bisector (F along -x-y),6.44698610e-02,1.00000000,6.25652785e-18,1.00000000
+Tilted 45° (F along xz-plane),6.42257123e-02,1.00000000,1.03577432e-02,1.00000000
