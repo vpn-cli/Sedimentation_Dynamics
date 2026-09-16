@@ -148,3 +148,27 @@ To accurately represent smooth non-spherical rigid bodies in multiblob Stokesian
 
 ### Conclusion on Mesh Selection
 The **geodesic icosahedral triangulation** method is uniquely suited for rigid multiblob simulations of prolate ellipsoids. Its strict reflection symmetry guarantees that the hydrodynamic center of mobility exactly coincides with the geometric centroid at machine precision, ensuring zero artificial tumbling without requiring empirical symmetry corrections.
+
+---
+
+## 9. Dimensionless Formulation & Physical Dimensional Units
+
+In this study and across the `RigidMultiblobsWall` framework, all numerical simulations are conducted in **characteristic dimensionless (reduced) Stokesian units**. Because low-Reynolds-number Stokes flow is governed by linear partial differential equations ($\eta \nabla^2 \mathbf{u} - \nabla p = \mathbf{0},\; \nabla \cdot \mathbf{u} = 0$), the hydrodynamics is scale-invariant. 
+
+### Fundamental Characteristic Scales
+The system is normalized by three independent base quantities:
+- **Characteristic Length ($L_c$)**: Semi-minor axis $b = 1.0$ (semi-major axis $a = 2.0$, aspect ratio $\lambda = 2.0$).
+- **Characteristic Fluid Viscosity ($\eta_c$)**: Dynamic viscosity $\eta = 1.0$.
+- **Characteristic Force ($F_c$)**: Gravitational buoyant sedimentation force magnitude $F_z = 1.0$.
+
+### Derived Hydrodynamic Scales & SI Units Mapping
+
+| Dimensionless Variable | Definition in Characteristic Scales | Code Parameter | Physical SI Units | Mapping to Real Systems |
+| :--- | :---: | :---: | :---: | :--- |
+| **Position** $\mathbf{r}^*$ | $\mathbf{r} / L_c$ | $x, y, z$ | $\mathrm{m}$ (or $\mu\mathrm{m}$) | $\mathbf{r} = \mathbf{r}^* \cdot L_c$ |
+| **Translational Mobility** $\mathbf{M}^*$ | $\mathbf{M} \cdot (\eta_c L_c)$ | $\mu_\parallel \approx 0.0435$, $\mu_\perp \approx 0.0354$ | $\displaystyle\frac{\mathrm{m}}{\mathrm{N}\cdot\mathrm{s}}$ | $\mathbf{M} = \mathbf{M}^* / (\eta_c L_c)$ |
+| **Settling Velocity** $\mathbf{U}^*$ | $\mathbf{U} / \left(\frac{F_c}{\eta_c L_c}\right)$ | $U_z \approx -0.0395$, $U_x \approx +0.0041$ | $\displaystyle\frac{\mathrm{m}}{\mathrm{s}}$ (or $\mu\mathrm{m}/\mathrm{s}$) | $\mathbf{U} = \mathbf{U}^* \cdot \left(\frac{F_c}{\eta_c L_c}\right)$ |
+| **Time** $t^*$ | $t / \left(\frac{\eta_c L_c^2}{F_c}\right)$ | $dt = 0.5$, $t_{\mathrm{total}} = 30.0$ | $\mathrm{s}$ | $t = t^* \cdot \left(\frac{\eta_c L_c^2}{F_c}\right)$ |
+| **Angular Velocity** $\mathbf{\Omega}^*$ | $\mathbf{\Omega} / \left(\frac{F_c}{\eta_c L_c^2}\right)$ | $\mathbf{\Omega} \equiv \mathbf{0}$ ($< 10^{-18}$) | $\displaystyle\frac{\mathrm{rad}}{\mathrm{s}}$ | $\mathbf{\Omega} = \mathbf{\Omega}^* \cdot \left(\frac{F_c}{\eta_c L_c^2}\right)$ |
+
+Because all computed velocities, times, and mobilities are pure dimensionless ratios, a single simulation trajectory universally characterizes any physical experimental regime—from microscopic colloidal suspensions ($\mu\mathrm{m}$, $\mathrm{mPa\cdot s}$, $\mathrm{pN}$) to laboratory-scale viscous fluid columns ($\mathrm{cm}$, $\mathrm{Pa\cdot s}$, $\mathrm{mN}$).
