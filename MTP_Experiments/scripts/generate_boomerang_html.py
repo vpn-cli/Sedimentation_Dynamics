@@ -657,9 +657,9 @@ def build_viewer():
                 const pz = d0.z + (d1.z - d0.z) * frac;
                 obj.position.set(px, py, pz);
 
-                // Slerp Quaternion
-                const q0 = new THREE.Quaternion(d0.quaternion[1], d0.quaternion[2], d0.quaternion[3], d0.quaternion[0]);
-                const q1 = new THREE.Quaternion(d1.quaternion[1], d1.quaternion[2], d1.quaternion[3], d1.quaternion[0]);
+                // Slerp Quaternion (x, y, z, w) where q0 is scalar w, and q1, q2, q3 are x, y, z
+                const q0 = new THREE.Quaternion(d0.q1, d0.q2, d0.q3, d0.q0);
+                const q1 = new THREE.Quaternion(d1.q1, d1.q2, d1.q3, d1.q0);
                 q0.slerp(q1, frac);
                 obj.quaternion.copy(q0);
 
