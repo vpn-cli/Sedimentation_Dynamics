@@ -1,0 +1,75 @@
+=====================================================================================
+PHASE 2B: TWO-DISC HYDRODYNAMIC FORCE-VELOCITY VALIDATION
+=====================================================================================
+Refinement Hierarchy: N in [12, 42, 162, 642, 2562]
+Force Sweep         : F in [0.1, 0.2, 0.5, 1.0, 2.0, 5.0]
+Primary Separation  : S = 40.0 R (S/R = 40.0)
+Orientation         : Face-on (broadside-on, normal along z)
+Theoretical Law     : U_th = F / (16 * eta * R) = F / 16
+
+-------------------------------------------------------------------------------------
+>>> Processing Resolution N =   12 Blobs <<<
+  Loaded geometry: a_blob = 0.312411, N_total_blobs = 24
+  Mobility system assembled and inverted in 0.002 s
+  F =  0.1 | U1 = 0.005901 | U2 = 0.005901 | diff = 3.09e-15 | U_th = 0.006250 | err =  5.59% | Re = 0.0118
+  F =  0.2 | U1 = 0.011801 | U2 = 0.011801 | diff = 6.17e-15 | U_th = 0.012500 | err =  5.59% | Re = 0.0236
+  F =  0.5 | U1 = 0.029503 | U2 = 0.029503 | diff = 1.54e-14 | U_th = 0.031250 | err =  5.59% | Re = 0.0590
+  F =  1.0 | U1 = 0.059006 | U2 = 0.059006 | diff = 3.09e-14 | U_th = 0.062500 | err =  5.59% | Re = 0.1180
+  F =  2.0 | U1 = 0.118012 | U2 = 0.118012 | diff = 6.17e-14 | U_th = 0.125000 | err =  5.59% | Re = 0.2360
+  F =  5.0 | U1 = 0.295031 | U2 = 0.295031 | diff = 1.54e-13 | U_th = 0.312500 | err =  5.59% | Re = 0.5901
+-------------------------------------------------------------------------------------
+>>> Processing Resolution N =   42 Blobs <<<
+  Loaded geometry: a_blob = 0.166991, N_total_blobs = 84
+  Mobility system assembled and inverted in 0.005 s
+  F =  0.1 | U1 = 0.006117 | U2 = 0.006117 | diff = 2.72e-15 | U_th = 0.006250 | err =  2.13% | Re = 0.0122
+  F =  0.2 | U1 = 0.012234 | U2 = 0.012234 | diff = 5.44e-15 | U_th = 0.012500 | err =  2.13% | Re = 0.0245
+  F =  0.5 | U1 = 0.030585 | U2 = 0.030585 | diff = 1.36e-14 | U_th = 0.031250 | err =  2.13% | Re = 0.0612
+  F =  1.0 | U1 = 0.061171 | U2 = 0.061171 | diff = 2.72e-14 | U_th = 0.062500 | err =  2.13% | Re = 0.1223
+  F =  2.0 | U1 = 0.122342 | U2 = 0.122342 | diff = 5.44e-14 | U_th = 0.125000 | err =  2.13% | Re = 0.2447
+  F =  5.0 | U1 = 0.305855 | U2 = 0.305855 | diff = 1.36e-13 | U_th = 0.312500 | err =  2.13% | Re = 0.6117
+-------------------------------------------------------------------------------------
+>>> Processing Resolution N =  162 Blobs <<<
+  Loaded geometry: a_blob = 0.085028, N_total_blobs = 324
+  Mobility system assembled and inverted in 0.036 s
+  F =  0.1 | U1 = 0.006231 | U2 = 0.006231 | diff = 4.27e-16 | U_th = 0.006250 | err =  0.30% | Re = 0.0125
+  F =  0.2 | U1 = 0.012463 | U2 = 0.012463 | diff = 8.53e-16 | U_th = 0.012500 | err =  0.30% | Re = 0.0249
+  F =  0.5 | U1 = 0.031157 | U2 = 0.031157 | diff = 2.13e-15 | U_th = 0.031250 | err =  0.30% | Re = 0.0623
+  F =  1.0 | U1 = 0.062314 | U2 = 0.062314 | diff = 4.27e-15 | U_th = 0.062500 | err =  0.30% | Re = 0.1246
+  F =  2.0 | U1 = 0.124628 | U2 = 0.124628 | diff = 8.53e-15 | U_th = 0.125000 | err =  0.30% | Re = 0.2493
+  F =  5.0 | U1 = 0.311569 | U2 = 0.311569 | diff = 2.13e-14 | U_th = 0.312500 | err =  0.30% | Re = 0.6231
+-------------------------------------------------------------------------------------
+>>> Processing Resolution N =  642 Blobs <<<
+  Loaded geometry: a_blob = 0.042712, N_total_blobs = 1284
+  Mobility system assembled and inverted in 0.866 s
+  F =  0.1 | U1 = 0.006294 | U2 = 0.006294 | diff = 1.85e-16 | U_th = 0.006250 | err =  0.71% | Re = 0.0126
+  F =  0.2 | U1 = 0.012589 | U2 = 0.012589 | diff = 3.69e-16 | U_th = 0.012500 | err =  0.71% | Re = 0.0252
+  F =  0.5 | U1 = 0.031472 | U2 = 0.031472 | diff = 9.23e-16 | U_th = 0.031250 | err =  0.71% | Re = 0.0629
+  F =  1.0 | U1 = 0.062944 | U2 = 0.062944 | diff = 1.85e-15 | U_th = 0.062500 | err =  0.71% | Re = 0.1259
+  F =  2.0 | U1 = 0.125888 | U2 = 0.125888 | diff = 3.69e-15 | U_th = 0.125000 | err =  0.71% | Re = 0.2518
+  F =  5.0 | U1 = 0.314720 | U2 = 0.314720 | diff = 9.16e-15 | U_th = 0.312500 | err =  0.71% | Re = 0.6294
+-------------------------------------------------------------------------------------
+>>> Processing Resolution N = 2562 Blobs <<<
+  Loaded geometry: a_blob = 0.021381, N_total_blobs = 5124
+  Mobility system assembled and inverted in 22.165 s
+  F =  0.1 | U1 = 0.006323 | U2 = 0.006323 | diff = 1.99e-17 | U_th = 0.006250 | err =  1.17% | Re = 0.0126
+  F =  0.2 | U1 = 0.012646 | U2 = 0.012646 | diff = 3.99e-17 | U_th = 0.012500 | err =  1.17% | Re = 0.0253
+  F =  0.5 | U1 = 0.031614 | U2 = 0.031614 | diff = 9.71e-17 | U_th = 0.031250 | err =  1.17% | Re = 0.0632
+  F =  1.0 | U1 = 0.063229 | U2 = 0.063229 | diff = 1.94e-16 | U_th = 0.062500 | err =  1.17% | Re = 0.1265
+  F =  2.0 | U1 = 0.126458 | U2 = 0.126458 | diff = 3.89e-16 | U_th = 0.125000 | err =  1.17% | Re = 0.2529
+  F =  5.0 | U1 = 0.316145 | U2 = 0.316145 | diff = 9.99e-16 | U_th = 0.312500 | err =  1.17% | Re = 0.6323
+
+[Raw CSV Saved] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2b_two_disc_force_velocity.csv
+[Summary Saved] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\processed_data\phase2b_two_disc_summary.json
+
+=====================================================================================
+SEPARATION SANITY CHECK (S / R sweep for N = 162, F = 1.0)
+=====================================================================================
+Isolated single disc benchmark at N=162: U_single = 0.061319
+  S =   5.0 R | U = 0.069396 | diff vs single = +8.08e-03 (13.17%)
+  S =  10.0 R | U = 0.065312 | diff vs single = +3.99e-03 ( 6.51%)
+  S =  20.0 R | U = 0.063310 | diff vs single = +1.99e-03 ( 3.25%)
+  S =  40.0 R | U = 0.062314 | diff vs single = +9.95e-04 ( 1.62%)
+  S =  80.0 R | U = 0.061816 | diff vs single = +4.97e-04 ( 0.81%)
+  S = 160.0 R | U = 0.061568 | diff vs single = +2.49e-04 ( 0.41%)
+[Separation CSV Saved] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2b_separation_check.csv
+[Plots Generated]      -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\plots

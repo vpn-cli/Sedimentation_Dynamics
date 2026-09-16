@@ -1,0 +1,21 @@
+================================================================================
+PHASE 2A: DYNAMIC TRAJECTORY & WALL EFFECT SIMULATIONS
+================================================================================
+
+>>> Simulating Unbounded Stokes Trajectories (N=95, dt=0.1, t_max=10.0 s) <<<
+  Face-on final z = 9.3628 | Terminal Uz = -0.063717 | Omega = 2.61e-08
+  Edge-on final z = 9.1350 | Terminal Uz = -0.086503 | Omega = 6.36e-18
+  Tilted final x = 0.1139 (drift) | final z = 9.2489 | final tilt = 45.00°
+
+>>> Simulating Near-Wall Sedimentation with Swan-Brady Mobility <<<
+  Wall Trajectory: initial tilt = 45.00° -> final tilt = 43.55°
+  Wall Trajectory: initial Uz = -0.05853 -> final Uz = -0.05427 (wall deceleration)
+
+>>> Running Timestep Sensitivity Study (dt = 0.2, 0.1, 0.05) <<<
+  dt = 0.20 s | Steps =  30 | Final x = 0.068356 | Final z = 9.549339 | Final Uz = -0.075110
+  dt = 0.10 s | Steps =  60 | Final x = 0.068356 | Final z = 9.549339 | Final Uz = -0.075110
+  dt = 0.05 s | Steps = 120 | Final x = 0.068356 | Final z = 9.549339 | Final Uz = -0.075110
+
+[Unbounded Trajectory Saved] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2a_trajectory_unbounded.csv
+[Wall Trajectory Saved]      -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2a_trajectory_wall.csv
+[Trajectory Plots Saved]     -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\plots

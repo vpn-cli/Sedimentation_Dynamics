@@ -1,0 +1,75 @@
+================================================================================
+PHASE 2A: SINGLE RIGID DISC MOBILITY & RESOLUTION CONVERGENCE
+================================================================================
+Physical Parameters:
+  Disc Radius R       : 1.0
+  Fluid Viscosity eta : 1.0
+  Force Magnitude F   : 1.0
+  Theoretical U_perp  : 0.062500
+  Theoretical U_par   : 0.093750
+  Theoretical Ratio   : 1.5000
+
+--------------------------------------------------------------------------------
+>>> Discretization: N =   20 Blobs | a_blob = 0.20000 | File: disc_N_20_R_1.0_rings_2.vertex <<<
+  [Face-on]  Uz = 0.065075 | Theory = 0.062500 | Rel Error =   4.12% | |Omega| = 1.57e-06 | Re = 1.3015e-01
+  [Edge-on]  Uz = 0.081997 | Theory = 0.093750 | Rel Error =  12.54% | |Omega| = 3.90e-18 | Re = 1.6399e-01
+  [Anisotropy Ratio] U_edge / U_face = 1.2600 | Theory = 1.5000 | Rel Error =  16.00%
+  [Tilted 45°] Ux = +0.008461 | Uz = -0.073536 | Drift Angle = 6.56° (Ideal Th: 11.31°)
+--------------------------------------------------------------------------------
+>>> Discretization: N =   39 Blobs | a_blob = 0.14286 | File: disc_N_39_R_1.0_rings_3.vertex <<<
+  [Face-on]  Uz = 0.064372 | Theory = 0.062500 | Rel Error =   3.00% | |Omega| = 1.89e-08 | Re = 1.2874e-01
+  [Edge-on]  Uz = 0.084113 | Theory = 0.093750 | Rel Error =  10.28% | |Omega| = 1.58e-18 | Re = 1.6823e-01
+  [Anisotropy Ratio] U_edge / U_face = 1.3067 | Theory = 1.5000 | Rel Error =  12.89%
+  [Tilted 45°] Ux = +0.009871 | Uz = -0.074243 | Drift Angle = 7.57° (Ideal Th: 11.31°)
+--------------------------------------------------------------------------------
+>>> Discretization: N =   95 Blobs | a_blob = 0.09091 | File: disc_N_95_R_1.0_rings_5.vertex <<<
+  [Face-on]  Uz = 0.063717 | Theory = 0.062500 | Rel Error =   1.95% | |Omega| = 2.61e-08 | Re = 1.2743e-01
+  [Edge-on]  Uz = 0.086503 | Theory = 0.093750 | Rel Error =   7.73% | |Omega| = 2.42e-18 | Re = 1.7301e-01
+  [Anisotropy Ratio] U_edge / U_face = 1.3576 | Theory = 1.5000 | Rel Error =   9.49%
+  [Tilted 45°] Ux = +0.011393 | Uz = -0.075110 | Drift Angle = 8.62° (Ideal Th: 11.31°)
+--------------------------------------------------------------------------------
+>>> Discretization: N =  177 Blobs | a_blob = 0.06667 | File: disc_N_177_R_1.0_rings_7.vertex <<<
+  [Face-on]  Uz = 0.063419 | Theory = 0.062500 | Rel Error =   1.47% | |Omega| = 4.69e-09 | Re = 1.2684e-01
+  [Edge-on]  Uz = 0.087867 | Theory = 0.093750 | Rel Error =   6.28% | |Omega| = 1.72e-18 | Re = 1.7573e-01
+  [Anisotropy Ratio] U_edge / U_face = 1.3855 | Theory = 1.5000 | Rel Error =   7.63%
+  [Tilted 45°] Ux = +0.012224 | Uz = -0.075643 | Drift Angle = 9.18° (Ideal Th: 11.31°)
+--------------------------------------------------------------------------------
+>>> Discretization: N =  347 Blobs | a_blob = 0.04762 | File: disc_N_347_R_1.0_rings_10.vertex <<<
+  [Face-on]  Uz = 0.063177 | Theory = 0.062500 | Rel Error =   1.08% | |Omega| = 5.01e-09 | Re = 1.2635e-01
+  [Edge-on]  Uz = 0.089109 | Theory = 0.093750 | Rel Error =   4.95% | |Omega| = 1.42e-18 | Re = 1.7822e-01
+  [Anisotropy Ratio] U_edge / U_face = 1.4105 | Theory = 1.5000 | Rel Error =   5.97%
+  [Tilted 45°] Ux = +0.012966 | Uz = -0.076143 | Drift Angle = 9.66° (Ideal Th: 11.31°)
+--------------------------------------------------------------------------------
+>>> Discretization: N =  755 Blobs | a_blob = 0.03226 | File: disc_N_755_R_1.0_rings_15.vertex <<<
+  [Face-on]  Uz = 0.062976 | Theory = 0.062500 | Rel Error =   0.76% | |Omega| = 3.04e-09 | Re = 1.2595e-01
+  [Edge-on]  Uz = 0.090265 | Theory = 0.093750 | Rel Error =   3.72% | |Omega| = 4.06e-18 | Re = 1.8053e-01
+  [Anisotropy Ratio] U_edge / U_face = 1.4333 | Theory = 1.5000 | Rel Error =   4.44%
+  [Tilted 45°] Ux = +0.013645 | Uz = -0.076620 | Drift Angle = 10.10° (Ideal Th: 11.31°)
+
+[Raw Data Saved]   -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2a_disc_cases.csv
+[Summary Saved]    -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\processed_data\phase2a_disc_resolution_summary.json
+
+================================================================================
+TILT ANGLE SWEEP (0° to 90°) FOR RESOLUTION N=755
+================================================================================
+Tilt  0.0° | Ux = +0.00000 | Uz = -0.06298 | Drift Angle =  0.00° | Theory Drift =  0.00° | |Omega| = 3.04e-09
+Tilt  5.0° | Ux = +0.00237 | Uz = -0.06318 | Drift Angle =  2.15° | Theory Drift =  2.48° | |Omega| = 3.03e-09
+Tilt 10.0° | Ux = +0.00467 | Uz = -0.06380 | Drift Angle =  4.18° | Theory Drift =  4.81° | |Omega| = 3.00e-09
+Tilt 15.0° | Ux = +0.00682 | Uz = -0.06480 | Drift Angle =  6.01° | Theory Drift =  6.90° | |Omega| = 2.94e-09
+Tilt 20.0° | Ux = +0.00877 | Uz = -0.06617 | Drift Angle =  7.55° | Theory Drift =  8.63° | |Omega| = 2.86e-09
+Tilt 25.0° | Ux = +0.01045 | Uz = -0.06785 | Drift Angle =  8.76° | Theory Drift =  9.97° | |Omega| = 2.76e-09
+Tilt 30.0° | Ux = +0.01182 | Uz = -0.06980 | Drift Angle =  9.61° | Theory Drift = 10.89° | |Omega| = 2.63e-09
+Tilt 35.0° | Ux = +0.01282 | Uz = -0.07195 | Drift Angle = 10.10° | Theory Drift = 11.41° | |Omega| = 2.49e-09
+Tilt 40.0° | Ux = +0.01344 | Uz = -0.07425 | Drift Angle = 10.26° | Theory Drift = 11.53° | |Omega| = 2.33e-09
+Tilt 45.0° | Ux = +0.01364 | Uz = -0.07662 | Drift Angle = 10.10° | Theory Drift = 11.31° | |Omega| = 2.15e-09
+Tilt 50.0° | Ux = +0.01344 | Uz = -0.07899 | Drift Angle =  9.65° | Theory Drift = 10.78° | |Omega| = 1.96e-09
+Tilt 55.0° | Ux = +0.01282 | Uz = -0.08129 | Drift Angle =  8.96° | Theory Drift =  9.98° | |Omega| = 1.74e-09
+Tilt 60.0° | Ux = +0.01182 | Uz = -0.08344 | Drift Angle =  8.06° | Theory Drift =  8.95° | |Omega| = 1.52e-09
+Tilt 65.0° | Ux = +0.01045 | Uz = -0.08539 | Drift Angle =  6.98° | Theory Drift =  7.73° | |Omega| = 1.29e-09
+Tilt 70.0° | Ux = +0.00877 | Uz = -0.08707 | Drift Angle =  5.75° | Theory Drift =  6.36° | |Omega| = 1.04e-09
+Tilt 75.0° | Ux = +0.00682 | Uz = -0.08844 | Drift Angle =  4.41° | Theory Drift =  4.87° | |Omega| = 7.87e-10
+Tilt 80.0° | Ux = +0.00467 | Uz = -0.08944 | Drift Angle =  2.99° | Theory Drift =  3.30° | |Omega| = 5.28e-10
+Tilt 85.0° | Ux = +0.00237 | Uz = -0.09006 | Drift Angle =  1.51° | Theory Drift =  1.66° | |Omega| = 2.65e-10
+Tilt 90.0° | Ux = +0.00000 | Uz = -0.09026 | Drift Angle =  0.00° | Theory Drift =  0.00° | |Omega| = 4.06e-18
+[Tilt Sweep Saved] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2a_disc_tilt_sweep.csv
+[Plots Generated]  -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\plots

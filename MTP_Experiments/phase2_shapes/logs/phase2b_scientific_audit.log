@@ -1,0 +1,32 @@
+=====================================================================================
+PHASE 2B: SCIENTIFIC AUDIT OF TWO-DISC HYDRODYNAMICS
+=====================================================================================
+
+[AUDIT 1] SEPARATING SINGLE-DISC & TWO-DISC EFFECTS ACROSS RESOLUTIONS
+-------------------------------------------------------------------------------------
+N =   12 | U_single = 0.058011 (err:  7.18%) | U(40R) = 0.059006 | Delta_U(40R) = +0.000995 (Oseen: 0.000995)
+         | Error vs Single Theory (1/16):  5.59% | Error vs Two-Disc Theory (1/16 + Oseen):  7.07%
+N =   42 | U_single = 0.060176 (err:  3.72%) | U(40R) = 0.061171 | Delta_U(40R) = +0.000995 (Oseen: 0.000995)
+         | Error vs Single Theory (1/16):  2.13% | Error vs Two-Disc Theory (1/16 + Oseen):  3.66%
+N =  162 | U_single = 0.061319 (err:  1.89%) | U(40R) = 0.062314 | Delta_U(40R) = +0.000995 (Oseen: 0.000995)
+         | Error vs Single Theory (1/16):  0.30% | Error vs Two-Disc Theory (1/16 + Oseen):  1.86%
+N =  642 | U_single = 0.061949 (err:  0.88%) | U(40R) = 0.062944 | Delta_U(40R) = +0.000995 (Oseen: 0.000995)
+         | Error vs Single Theory (1/16):  0.71% | Error vs Two-Disc Theory (1/16 + Oseen):  0.87%
+N = 2562 | U_single = 0.062234 (err:  0.43%) | U(40R) = 0.063229 | Delta_U(40R) = +0.000995 (Oseen: 0.000995)
+         | Error vs Single Theory (1/16):  1.17% | Error vs Two-Disc Theory (1/16 + Oseen):  0.42%
+
+[Saved Audit CSV] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2b_audit_separation_extrapolation.csv
+
+[AUDIT 2] LOW-REYNOLDS NUMBER FORCE SWEEP AUDIT
+-------------------------------------------------------------------------------------
+Low-Re sweep evaluated for F in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0]. Maximum Re = 0.1265 << 1.
+
+[AUDIT 3] NUMERICAL CONDITIONING & SOLVER STABILITY
+-------------------------------------------------------------------------------------
+N =   12 (Size    72x   72) | Cholesky min(diag) = 0.2661 | Schur cond = 1.64
+N =   42 (Size   252x  252) | Cholesky min(diag) = 0.3603 | Schur cond = 1.44
+N =  162 (Size   972x  972) | Cholesky min(diag) = 0.4988 | Schur cond = 1.47
+N =  642 (Size  3852x 3852) | Cholesky min(diag) = 0.7035 | Schur cond = 1.50
+N = 2562 (Size 15372x15372) | Cholesky min(diag) = 0.9939 | Schur cond = 1.51
+[Saved Conditioning CSV] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2b_audit_solver_conditioning.csv
+[Generated Audited Plots] -> d:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\plots
