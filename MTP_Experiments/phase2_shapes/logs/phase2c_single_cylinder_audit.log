@@ -1,0 +1,17 @@
+===============================================================================================
+PHASE 2C: SINGLE RIGID CYLINDER MOBILITY, ORIENTATION & CONDITIONING AUDIT
+===============================================================================================
+Cylinder Dimensions: Radius R=1.00, Length L=2.00, Aspect Ratio L/(2R)=1.00
+Fluid Properties: Viscosity eta=1.00, Density rho=1.00
+Theoretical Benchmarks (Unit Force F=1.0):
+  Equivalent Surface Sphere (Primary) : U = 0.043316 | Rh = 23.0859
+  Hubbard-Douglas Capacitance         : U = 0.045791 | Rh = 21.8384
+  Tirado & Garcia de la Torre (Mean)  : U = 0.041221 | Rh = 24.2594
+
+     N |   a_blob |    U_axial |    U_trans | Ratio U_tr/U_ax |  Err Surf% |    |Omega| | Cond(K^tM^-1K) |  Time(s)
+    12 |   0.6267 |    0.03685 |    0.03585 |         0.9729 |     16.47% |   3.83e-04 |           3.08 |     0.01
+    42 |   0.3350 |    0.04008 |    0.03950 |         0.9854 |      8.36% |   2.73e-04 |           2.58 |     0.00
+   162 |   0.1706 |    0.04188 |    0.04140 |         0.9886 |      4.05% |   7.52e-05 |           2.39 |     0.01
+   642 |   0.0857 |    0.04306 |    0.04264 |         0.9904 |      1.23% |   6.64e-05 |           2.26 |     0.19
+  2562 |   0.0429 |    0.04363 |    0.04324 |         0.9910 |      0.13% |   8.26e-06 |           2.20 |     3.90
+===============================================================================================

@@ -1,0 +1,45 @@
+===============================================================================================
+PHASE 2C: RIGID CYLINDER HYDRODYNAMIC FORCE-VELOCITY VALIDATION
+===============================================================================================
+Parameters: R=1.0, L=2.0, eta=1.0, rho=1.0, Char Length L_c=2.0
+Force Sweep: [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1.0]
+Theoretical Unit-Force Velocities:
+  Equivalent Surface Sphere (Primary): 0.043316 (Rh = 23.0859)
+  Hubbard-Douglas Capacitance        : 0.045791 (Rh = 21.8384)
+  Tirado & Garcia de la Torre        : 0.041221 (Rh = 24.2594)
+
+-----------------------------------------------------------------------------------------------
+>>> Running Cylinder Resolution N =   12 Blobs | a_blob = 0.62666 <<<
+  Axial Fit:      Slope m=0.036849 | b=0.00e+00 | R^2=1.00000000 | Rel Err=14.93%
+  Transverse Fit: Slope m=0.035851 | b=0.00e+00 | R^2=1.00000000 | Rel Err=17.24%
+  Anisotropy Ratio U_perp / U_par = 0.97289 | Rh_par = 27.1375 | Rh_perp = 27.8936
+  Max Re: 0.0737 (Stokes limit strictly preserved)
+-----------------------------------------------------------------------------------------------
+>>> Running Cylinder Resolution N =   42 Blobs | a_blob = 0.33496 <<<
+  Axial Fit:      Slope m=0.040084 | b=-1.73e-18 | R^2=1.00000000 | Rel Err=7.46%
+  Transverse Fit: Slope m=0.039500 | b=1.73e-18 | R^2=1.00000000 | Rel Err=8.81%
+  Anisotropy Ratio U_perp / U_par = 0.98542 | Rh_par = 24.9476 | Rh_perp = 25.3166
+  Max Re: 0.0802 (Stokes limit strictly preserved)
+-----------------------------------------------------------------------------------------------
+>>> Running Cylinder Resolution N =  162 Blobs | a_blob = 0.17055 <<<
+  Axial Fit:      Slope m=0.041882 | b=0.00e+00 | R^2=1.00000000 | Rel Err=3.31%
+  Transverse Fit: Slope m=0.041404 | b=-1.73e-18 | R^2=1.00000000 | Rel Err=4.41%
+  Anisotropy Ratio U_perp / U_par = 0.98858 | Rh_par = 23.8765 | Rh_perp = 24.1522
+  Max Re: 0.0838 (Stokes limit strictly preserved)
+-----------------------------------------------------------------------------------------------
+>>> Running Cylinder Resolution N =  642 Blobs | a_blob = 0.08567 <<<
+  Axial Fit:      Slope m=0.043060 | b=-1.73e-18 | R^2=1.00000000 | Rel Err=0.59%
+  Transverse Fit: Slope m=0.042645 | b=0.00e+00 | R^2=1.00000000 | Rel Err=1.55%
+  Anisotropy Ratio U_perp / U_par = 0.99036 | Rh_par = 23.2234 | Rh_perp = 23.4495
+  Max Re: 0.0861 (Stokes limit strictly preserved)
+-----------------------------------------------------------------------------------------------
+>>> Running Cylinder Resolution N = 2562 Blobs | a_blob = 0.04289 <<<
+  Axial Fit:      Slope m=0.043633 | b=-3.47e-18 | R^2=1.00000000 | Rel Err=0.73%
+  Transverse Fit: Slope m=0.043241 | b=-1.73e-18 | R^2=1.00000000 | Rel Err=0.17%
+  Anisotropy Ratio U_perp / U_par = 0.99100 | Rh_par = 22.9182 | Rh_perp = 23.1263
+  Max Re: 0.0873 (Stokes limit strictly preserved)
+===============================================================================================
+Saved force-velocity CSV: D:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2c_cylinder_force_velocity.csv
+Saved convergence CSV:    D:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\raw_data\phase2c_cylinder_convergence.csv
+Saved summary JSON:       D:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\processed_data\phase2c_cylinder_summary.json
+Generated publication plots in: D:\Sedimentation_Dynamics\MTP_Experiments\phase2_shapes\plots
