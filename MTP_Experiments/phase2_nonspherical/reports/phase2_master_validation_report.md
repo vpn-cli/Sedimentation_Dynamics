@@ -37,7 +37,7 @@ Following the Phase 1 spherical baseline validation, Phase 2 establishes the the
 | **Translation-Rotation Coupling** | Identically Zero ($M_{tr} \equiv 0$) | Zero at Centroid ($M_{tr} \equiv 0$) | Non-zero off CoM ($\|M_{tr}\| > 0$) |
 | **Sedimentation Trajectory** | Purely Vertical ($U_x = U_y = 0$) | Oblique Drift ($U_x \ne 0$ for $\theta \ne 0$) | Oblique Drift + Reorientation / Spiraling |
 | **Rotation under Pure Gravity** | Zero ($\mathbf{\Omega} \equiv \mathbf{0}$) | Zero ($\mathbf{\Omega} \equiv \mathbf{0}$) | Non-zero ($\mathbf{\Omega} = M_{rt} \mathbf{F}$) |
-| **Recommended Blob Resolution** | $N = 162$ ($0.95\%$ error) | $N = 162$ ($4.8\%$ error vs Perrin) | $N = 84$ ($7 \times 12$ shells) |
+| **Recommended Blob Resolution** | $N = 162$ ($0.95\%$ error) | $N = 162$ ($4.8\%$ error vs Perrin); $N=2562$ benchmark ($1.0\%$ error) | $N = 84$ ($7 \times 12$ shells) |
 | **Onsager Reciprocal Error** | $< 10^{-17}$ | $< 10^{-17}$ | $< 10^{-16}$ |
 
 ---

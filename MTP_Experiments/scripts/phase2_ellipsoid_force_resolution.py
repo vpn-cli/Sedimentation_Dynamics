@@ -5,7 +5,7 @@ Phase 2: Sedimentation Velocity vs Applied Force Across Multiple Blob Resolution
 for a Prolate Spheroid (Ellipsoid) in Low-Reynolds-Number Stokes Flow.
 
 Investigates:
-1. Multi-Resolution Force Sweep: N in {12, 42, 162, 642} across F_z in {0.2, 0.5, 1.0, 2.0, 5.0, 10.0}.
+1. Multi-Resolution Force Sweep: N in {12, 42, 162, 642, 2562} across F_z in {0.2, 0.5, 1.0, 2.0, 5.0, 10.0}.
 2. Comparison against exact continuum Perrin (1934) theoretical slopes for both:
    - Vertical sedimentation speed |U_z|
    - Lateral oblique drift velocity U_x (at tilt angle theta = 45 deg)
@@ -61,7 +61,7 @@ plt.rcParams.update({
     'savefig.bbox': 'tight'
 })
 
-RESOLUTIONS = [12, 42, 162, 642]
+RESOLUTIONS = [12, 42, 162, 642, 2562]
 FORCES = [0.2, 0.5, 1.0, 2.0, 5.0, 10.0]
 ASPECT_RATIO = 2.0
 SEMI_MAJOR = 2.0
@@ -195,8 +195,8 @@ def run_force_resolution_sweep():
     # =========================================================================
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.2))
 
-    colors = {12: '#2ca02c', 42: '#ff7f0e', 162: '#1f77b4', 642: '#9467bd'}
-    markers = {12: 'o', 42: 's', 162: '^', 642: 'D'}
+    colors = {12: '#2ca02c', 42: '#ff7f0e', 162: '#1f77b4', 642: '#9467bd', 2562: '#d62728'}
+    markers = {12: 'o', 42: 's', 162: '^', 642: 'D', 2562: 'v'}
 
     F_dense = np.linspace(0.0, 10.0, 100)
     F_plot = np.array(FORCES)

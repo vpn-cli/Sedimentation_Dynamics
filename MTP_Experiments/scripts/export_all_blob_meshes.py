@@ -8,7 +8,7 @@ if SCRIPT_DIR not in sys.path:
 
 import phase2_common as p2c
 
-resolutions = [12, 42, 162, 642]
+resolutions = [12, 42, 162, 642, 2562]
 a = 2.0
 b = 1.0
 
@@ -17,7 +17,8 @@ mobility_data = {
     12: {'mu_par': 0.03524, 'mu_perp': 0.03104, 'err_par': 20.03, 'err_perp': 19.31},
     42: {'mu_par': 0.03897, 'mu_perp': 0.03438, 'err_par': 11.56, 'err_perp': 10.63},
     162: {'mu_par': 0.04161, 'mu_perp': 0.03660, 'err_par': 5.56, 'err_perp': 4.87},
-    642: {'mu_par': 0.04293, 'mu_perp': 0.03762, 'err_par': 2.57, 'err_perp': 2.21}
+    642: {'mu_par': 0.04293, 'mu_perp': 0.03762, 'err_par': 2.57, 'err_perp': 2.21},
+    2562: {'mu_par': 0.04353, 'mu_perp': 0.03807, 'err_par': 1.21, 'err_perp': 1.04}
 }
 
 meshes = {}

@@ -7,7 +7,7 @@ in Low-Reynolds-Number Stokes Flow.
 Experiments:
   1. Mobility Tensor Symmetries & Decoupling at Centroid (Orthotropic Check)
   2. Analytical Comparison with Perrin (1934) Theory across Aspect Ratios (lambda = 1.0 to 5.0)
-  3. Resolution Convergence Study (N = 12, 42, 162, 642)
+  3. Resolution Convergence Study (N = 12, 42, 162, 642, 2562)
   4. Tilted Sedimentation & Oblique Lateral Drift (theta = 0 to 90 deg)
   5. Force Linearity Sweep (F = 0.2 to 10.0)
 
@@ -236,7 +236,7 @@ def run_experiment_perrin(N=162, aspect_ratios=[1.0, 1.5, 2.0, 3.0, 4.0, 5.0], b
 # EXPERIMENT 3: RESOLUTION CONVERGENCE STUDY
 # =============================================================================
 
-def run_experiment_resolution(resolutions=[12, 42, 162, 642], a=2.0, b=1.0, eta=1.0):
+def run_experiment_resolution(resolutions=[12, 42, 162, 642, 2562], a=2.0, b=1.0, eta=1.0):
     print("\n" + "="*70)
     print(f"EXPERIMENT 3: Resolution Convergence Study (lambda={a/b:.1f})")
     print("="*70)
@@ -295,36 +295,40 @@ def run_experiment_resolution(resolutions=[12, 42, 162, 642], a=2.0, b=1.0, eta=
     ax1.plot(Ns, err_pars, 'bo-', linewidth=2.0, markersize=7, label=r'$\mu_\parallel$ Error (%)')
     ax1.plot(Ns, err_perps, 'rs--', linewidth=2.0, markersize=7, label=r'$\mu_\perp$ Error (%)')
 
-    # Annotate key data points for N=162 and N=642
+    # Annotate key data points for N=162, N=642, N=2562
     for N, ep, epr in zip(Ns, err_pars, err_perps):
-        if N in [162, 642]:
+        if N in [162, 642, 2562]:
+            x_offset = 60 if N < 2000 else -500
+            y_offset = 1.2 if N < 2000 else 2.5
             ax1.annotate(f"N={N}\n$\mu_\parallel$: {ep:.2f}%\n$\mu_\perp$: {epr:.2f}%",
-                         xy=(N, ep), xytext=(N + 25, ep + 1.2),
+                         xy=(N, ep), xytext=(N + x_offset, ep + y_offset),
                          arrowprops=dict(arrowstyle='->', lw=1.2, color='darkblue'),
-                         fontsize=9, bbox=dict(boxstyle='round,pad=0.25', facecolor='white', alpha=0.85, edgecolor='gray'))
+                         fontsize=8.5, bbox=dict(boxstyle='round,pad=0.25', facecolor='white', alpha=0.85, edgecolor='gray'))
 
     ax1.set_xlabel('Number of Blobs N')
     ax1.set_ylabel('Relative Error vs Perrin Theory (%)')
     ax1.set_title('Resolution Convergence (Linear Scale)')
     ax1.set_ylim(0, 24)
-    ax1.set_xlim(0, 700)
+    ax1.set_xlim(0, 2800)
     ax1.grid(True, linestyle=':', alpha=0.6)
     ax1.legend(loc='upper right')
 
     # Subplot 2: Computational Cost vs N (Linear Scale)
     ax2.plot(Ns, runtimes, 'k^-', linewidth=2.0, markersize=7, label='Solve Time (s)')
     for N, rt in zip(Ns, runtimes):
-        if N in [162, 642]:
+        if N in [162, 642, 2562]:
+            x_offset = -200 if N < 2000 else -550
+            y_offset = 0.05 if N < 2000 else -0.5
             ax2.annotate(f"N={N}: {rt:.3f} s",
-                         xy=(N, rt), xytext=(N - 150, rt + 0.025),
+                         xy=(N, rt), xytext=(N + x_offset, rt + y_offset),
                          arrowprops=dict(arrowstyle='->', lw=1.2, color='black'),
-                         fontsize=9, bbox=dict(boxstyle='round,pad=0.25', facecolor='white', alpha=0.85, edgecolor='gray'))
+                         fontsize=8.5, bbox=dict(boxstyle='round,pad=0.25', facecolor='white', alpha=0.85, edgecolor='gray'))
 
     ax2.set_xlabel('Number of Blobs N')
     ax2.set_ylabel('Solver Runtime (s)')
     ax2.set_title(r'Computational Cost vs Resolution ($\mathcal{O}(N^3)$ Cholesky)')
     ax2.set_ylim(0, max(runtimes) * 1.25)
-    ax2.set_xlim(0, 700)
+    ax2.set_xlim(0, 2800)
     ax2.grid(True, linestyle=':', alpha=0.6)
     ax2.legend(loc='upper left')
 
@@ -616,7 +620,7 @@ def generate_validation_report(sym_res, perrin_res, res_conv, drift_res, lin_res
         "",
         "## 6. Conclusions & Practical Recommendations for MTP",
         "",
-        "1. **Practical Recommended Resolution**: $N = 162$ blobs provides an ideal balance of precision (~5% absolute error, < 0.9% anisotropy ratio error) and sub-second execution speed (0.019s per solve), while $N = 642$ offers high absolute precision (< 2.6% error) for static benchmark checks.",
+        "1. **Practical Recommended Resolution**: $N = 162$ blobs provides an ideal balance of precision (~5% absolute error, < 0.9% anisotropy ratio error) and sub-second execution speed (0.019s per solve), while $N = 642$ offers high absolute precision (< 2.6% error) and $N = 2562$ delivers benchmark-quality fidelity (~1.1% error).",
         "2. **Baseline Spheroid Validated**: The ellipsoid is now fully qualified as our nonspherical reference particle.",
         "3. **Physical Drift Mechanism Confirmed**: Shape-induced oblique drift without tumbling is verified as the governing mechanism for anisotropic sedimentation."
     ])
@@ -637,7 +641,7 @@ def main():
 
     sym_res = run_experiment_symmetry(N=162, a=2.0, b=1.0)
     perrin_res = run_experiment_perrin(N=162, aspect_ratios=[1.0, 1.5, 2.0, 3.0, 4.0, 5.0])
-    res_conv = run_experiment_resolution(resolutions=[12, 42, 162, 642], a=2.0, b=1.0)
+    res_conv = run_experiment_resolution(resolutions=[12, 42, 162, 642, 2562], a=2.0, b=1.0)
     drift_res = run_experiment_tilted(N=162, a=2.0, b=1.0, Fz=1.0)
     lin_res = run_experiment_linearity(N=162, a=2.0, b=1.0, theta_deg=45.0)
 
