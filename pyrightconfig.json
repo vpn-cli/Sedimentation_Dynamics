@@ -1,0 +1,6 @@
+{
+  "extraPaths": [
+    "./RigidMultiblobsWall"
+  ],
+  "pythonVersion": "3.12"
+}

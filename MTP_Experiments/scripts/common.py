@@ -19,7 +19,7 @@ if 'imp' not in sys.modules:
         if spec is None:
             raise ImportError(f"No module named '{name}'")
         return spec
-    imp.find_module = find_module
+    setattr(imp, 'find_module', find_module)
     sys.modules['imp'] = imp
 
 # Path resolution: configurable and relative to this script
@@ -33,11 +33,11 @@ if REPO_PATH not in sys.path:
 import numpy as np
 import scipy.linalg
 import scipy.sparse.linalg as spla
-from body.body import Body
-from quaternion_integrator.quaternion import Quaternion
-from mobility import mobility as mb
-from mobility import mobility_numba
-from read_input.read_vertex_file import read_vertex_file
+from body.body import Body  # type: ignore
+from quaternion_integrator.quaternion import Quaternion  # type: ignore
+from mobility import mobility as mb  # type: ignore
+from mobility import mobility_numba  # type: ignore
+from read_input.read_vertex_file import read_vertex_file  # type: ignore
 
 # Directory configuration for Phase 1
 PHASE1_DIR = os.path.join(EXPERIMENTS_DIR, 'phase1_sphere')
@@ -176,7 +176,7 @@ def solve_sphere_unbounded(r_conf, a_blob, eta, force_vec, torque_vec=None, meth
             return np.concatenate([res_blob, res_body])
             
         sys_size = 3*Nblobs + 6
-        A_op = spla.LinearOperator((sys_size, sys_size), matvec=matvec, dtype=np.float64)
+        A_op = spla.LinearOperator((sys_size, sys_size), matvec=matvec, dtype=np.float64)  # type: ignore
         
         m_self_inv = 6.0 * np.pi * eta * a_blob
         Kt_M0inv_K = m_self_inv * np.dot(K.T, K)
@@ -191,7 +191,7 @@ def solve_sphere_unbounded(r_conf, a_blob, eta, force_vec, torque_vec=None, meth
             lam_approx = m_self_inv * (r_blob + np.dot(K, u_approx))
             return np.concatenate([lam_approx, u_approx])
             
-        PC_op = spla.LinearOperator((sys_size, sys_size), matvec=pc_matvec, dtype=np.float64)
+        PC_op = spla.LinearOperator((sys_size, sys_size), matvec=pc_matvec, dtype=np.float64)  # type: ignore
         RHS = np.concatenate([np.zeros(3*Nblobs), -wrench])
         
         sol, info = spla.gmres(A_op, RHS, M=PC_op, rtol=1e-8, atol=1e-10, restart=60, maxiter=300)

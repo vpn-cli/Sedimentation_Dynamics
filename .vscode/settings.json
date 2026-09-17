@@ -1,0 +1,8 @@
+{
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/RigidMultiblobsWall"
+  ],
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}/RigidMultiblobsWall"
+  ]
+}
